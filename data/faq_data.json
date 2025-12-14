@@ -1,0 +1,331 @@
+[
+  {
+    "id": 1,
+    "question_patterns": [
+      "What courses are available?",
+      "Engineering courses",
+      "Available programs",
+      "What programs do you offer?",
+      "കോഴ്സുകൾ",
+      "എന്ത് കോഴ്സുകൾ ഉണ്ട്?",
+      "പഠന പരിപാടികൾ",
+      "പ്രോഗ്രാമുകൾ"
+    ],
+    "tags": ["courses", "programs", "admissions", "പഠനം", "ബിരുദം"],
+    "answer_facts": {
+      "B.Tech Programs": "Computer Science & Engineering, Electronics & Communication Engineering, Electrical & Electronics Engineering, Civil Engineering, Mechanical Engineering",
+      "Duration": "4 years (8 semesters)",
+      "Intake Capacity": "60 students per branch",
+      "Approval": "Approved by AICTE and affiliated to APJ Abdul Kalam Technological University",
+      "M.Tech Programs": "Computer Science & Engineering, VLSI & Embedded Systems, Power Systems",
+      "Other Programs": "Master of Business Administration (MBA), Master of Computer Applications (MCA)",
+      "PhD Programs": "Research programs available in all engineering departments"
+    }
+  },
+  {
+    "id": 2,
+    "question_patterns": [
+      "Contact information",
+      "How to contact college?",
+      "Office phone",
+      "Email address",
+      "കോളേജ് ഫോൺ നമ്പർ",
+      "എങ്ങനെ ബന്ധപ്പെടാം?",
+      "വിലാസം",
+      "ഇമെയിൽ"
+    ],
+    "tags": ["contact", "phone", "email", "address", "ബന്ധപ്പെടൽ", "സമ്പർക്കം"],
+    "answer_facts": {
+      "Phone": "+91-4994-256300, +91-4994-256301",
+      "Fax": "+91-4994-256302",
+      "Email": "principal@lbscek.ac.in, office@lbscek.ac.in",
+      "Admission Email": "admission@lbscek.ac.in",
+      "Address": "LBS College of Engineering, Muliyar, Kasaragod District, Kerala - 671542, India",
+      "Location": "Situated on Kasaragod-Mangalore National Highway (NH 66), 22 km from Kasaragod town",
+      "Website": "https://lbscek.ac.in",
+      "Office Hours": "9:00 AM to 5:00 PM (Monday to Friday), 9:00 AM to 1:00 PM (Saturday)"
+    }
+  },
+  {
+    "id": 3,
+    "question_patterns": [
+      "Library hours",
+      "When is library open?",
+      "Library timing",
+      "ലൈബ്രറി സമയം",
+      "ലൈബ്രറി തുറന്ന സമയം",
+      "വായനശാല സമയം"
+    ],
+    "tags": ["library", "facilities", "timings", "ലൈബ്രറി", "വായനശാല"],
+    "answer_facts": {
+      "Weekdays (Mon-Fri)": "8:30 AM to 8:00 PM",
+      "Saturdays": "8:30 AM to 5:00 PM",
+      "Sundays": "10:00 AM to 4:00 PM",
+      "Exam Period": "Extended hours during university exams",
+      "Digital Library": "24/7 access to online resources",
+      "Collection": "Over 25,000 books, 100+ print journals, 5000+ e-journals",
+      "Facilities": "Reading rooms, reference section, digital library, photocopying"
+    }
+  },
+  {
+    "id": 4,
+    "question_patterns": [
+      "Admission process",
+      "How to apply?",
+      "Admission procedure",
+      "എങ്ങനെ അപ്ലൈ ചെയ്യാം?",
+      "അഡ്മിഷൻ പ്രോസസ്സ്",
+      "പ്രവേശന രീതി"
+    ],
+    "tags": ["admission", "apply", "procedure", "അഡ്മിഷൻ", "പ്രവേശനം"],
+    "answer_facts": {
+      "Application Mode": "Through KEAM (Kerala Engineering Architecture Medical) counselling",
+      "Eligibility": "10+2 with minimum 50% marks in Physics, Chemistry, and Mathematics",
+      "Entrance Exam": "KEAM score is mandatory",
+      "Lateral Entry": "Diploma holders can apply for direct second year admission",
+      "NRI Quota": "15% seats reserved for NRI candidates",
+      "Management Quota": "Available as per government norms",
+      "Important Dates": "KEAM application usually opens in January, counselling in June-July",
+      "Documents Required": "KEAM rank card, 10th & 12th marksheets, transfer certificate, conduct certificate, passport size photos"
+    }
+  },
+  {
+    "id": 5,
+    "question_patterns": [
+      "Fee structure",
+      "College fees",
+      "Tuition fees",
+      "ഫീസ് എത്ര?",
+      "ട്യൂഷൻ ഫീസ്",
+      "കോളേജ് ഫീസ്"
+    ],
+    "tags": ["fees", "fee structure", "tuition", "ഫീസ്", "ട്യൂഷൻ"],
+    "answer_facts": {
+      "Government Seat Fees": "Approximately ₹45,000 per year",
+      "Management Seat Fees": "Approximately ₹75,000 per year",
+      "NRI Quota Fees": "Approximately $3,000 per year",
+      "Other Fees": "Caution deposit (refundable): ₹5,000, Library fee: ₹1,500, Exam fee: ₹2,000 per semester",
+      "Hostel Fees": "Approximately ₹35,000 per year including food",
+      "Payment Mode": "Online payment available through college portal",
+      "Scholarships": "Merit scholarships, SC/ST scholarships, EWS scholarships available"
+    }
+  },
+  {
+    "id": 6,
+    "question_patterns": [
+      "Hostel facilities",
+      "Accommodation",
+      "Boys hostel",
+      "Girls hostel",
+      "ഹോസ്റ്റൽ",
+      "വസതി",
+      "ആൺകുട്ടികൾ ഹോസ്റ്റൽ",
+      "പെൺകുട്ടികൾ ഹോസ്റ്റൽ"
+    ],
+    "tags": ["hostel", "accommodation", "boarding", "ഹോസ്റ്റൽ", "വസതി"],
+    "answer_facts": {
+      "Boys Hostel": "Separate hostel blocks with capacity for 300 students",
+      "Girls Hostel": "Secure hostel with capacity for 200 students",
+      "Rooms": "Single, double, and triple sharing rooms available",
+      "Facilities": "Wi-Fi, reading room, TV room, indoor games, gym, laundry",
+      "Mess": "Separate vegetarian and non-vegetarian mess with North & South Indian food",
+      "Security": "24/7 security, CCTV surveillance, warden supervision",
+      "Medical": "First aid facility, tie-up with nearby hospitals",
+      "Visiting Hours": "Parents can visit on weekends with prior permission"
+    }
+  },
+  {
+    "id": 7,
+    "question_patterns": [
+      "Placement cell",
+      "Campus recruitment",
+      "Job opportunities",
+      "പ്ലേസ്മെന്റ്",
+      "ജോലി അവസരങ്ങൾ",
+      "കാമ്പസ് റിക്രൂട്ട്മെന്റ്"
+    ],
+    "tags": ["placement", "jobs", "career", "recruitment", "പ്ലേസ്മെന്റ്", "ജോലി"],
+    "answer_facts": {
+      "Placement Cell": "Dedicated Training & Placement Cell with full-time coordinator",
+      "Companies Visited": "TCS, Infosys, Wipro, Tech Mahindra, Cognizant, Bosch, BYJU'S, etc.",
+      "Highest Package": "₹12 LPA (2023 batch)",
+      "Average Package": "₹4.5 LPA",
+      "Placement Rate": "85% of eligible students placed",
+      "Training Programs": "Aptitude training, technical workshops, mock interviews, GD sessions",
+      "Internships": "Summer internships with stipend in reputed companies",
+      "Higher Studies": "Guidance for GATE, CAT, GRE, TOEFL exams"
+    }
+  },
+  {
+    "id": 8,
+    "question_patterns": [
+      "College location",
+      "How to reach?",
+      "Directions to college",
+      "കോളേജ് എവിടെ?",
+      "എങ്ങനെ എത്തിച്ചേരാം?",
+      "സ്ഥലം"
+    ],
+    "tags": ["location", "directions", "map", "സ്ഥലം", "ലൊക്കേഷൻ"],
+    "answer_facts": {
+      "Address": "LBS College of Engineering, Muliyar, Kasaragod District, Kerala - 671542",
+      "Highway": "Located on Kasaragod-Mangalore National Highway (NH 66)",
+      "From Kasaragod": "22 km towards Mangalore, 45 minutes by road",
+      "From Mangalore": "65 km towards Kasaragod, 1.5 hours by road",
+      "Nearest Railway": "Kasaragod Railway Station (25 km)",
+      "Nearest Airport": "Mangalore International Airport (75 km)",
+      "Bus Connectivity": "Regular KSRTC and private buses from Kasaragod and Mangalore",
+      "GPS Coordinates": "12.5960° N, 75.0300° E"
+    }
+  },
+  {
+    "id": 9,
+    "question_patterns": [
+      "College timing",
+      "Working hours",
+      "Office hours",
+      "കോളേജ് സമയം",
+      "ഓഫീസ് സമയം",
+      "പ്രവർത്തന സമയം"
+    ],
+    "tags": ["timings", "hours", "schedule", "സമയം", "ടൈമിംഗ്"],
+    "answer_facts": {
+      "College Hours": "9:00 AM to 4:30 PM (Monday to Friday)",
+      "Office Hours": "9:00 AM to 5:00 PM (Monday to Friday), 9:00 AM to 1:00 PM (Saturday)",
+      "Class Timing": "9:15 AM to 4:00 PM with lunch break from 1:00 PM to 1:45 PM",
+      "Library Hours": "8:30 AM to 8:00 PM (Weekdays), 8:30 AM to 5:00 PM (Saturday), 10:00 AM to 4:00 PM (Sunday)",
+      "Computer Center": "8:30 AM to 8:00 PM (All days)",
+      "Holidays": "Follows Kerala Government and University holidays",
+      "Examination Period": "Special timings during university exams"
+    }
+  },
+  {
+    "id": 10,
+    "question_patterns": [
+      "Sports facilities",
+      "Playground",
+      "Gym",
+      "സ്പോർട്സ്",
+      "ഗ്രൗണ്ട്",
+      "ജിം",
+      "കായിക സൗകര്യങ്ങൾ"
+    ],
+    "tags": ["sports", "games", "gym", "സ്പോർട്സ്", "കായികം"],
+    "answer_facts": {
+      "Playground": "Large playground for cricket, football, volleyball",
+      "Indoor Stadium": "Multi-purpose indoor stadium for badminton, table tennis, chess",
+      "Gymnasium": "Well-equipped gym with trainer",
+      "Sports Offered": "Cricket, football, basketball, volleyball, badminton, table tennis, chess, carrom",
+      "Annual Sports": "Inter-collegiate tournaments, annual sports meet",
+      "Coaching": "Professional coaching available for major sports",
+      "Achievements": "University level championships in cricket and athletics"
+    }
+  },
+  {
+    "id": 11,
+    "question_patterns": [
+      "Laboratories",
+      "Computer labs",
+      "Engineering labs",
+      "ലാബുകൾ",
+      "കമ്പ്യൂട്ടർ ലാബ്",
+      "പരീക്ഷണശാല"
+    ],
+    "tags": ["labs", "laboratories", "facilities", "ലാബ്", "പരീക്ഷണശാല"],
+    "answer_facts": {
+      "Computer Labs": "8 computer labs with 400+ systems, high-speed internet",
+      "Department Labs": "Separate labs for each engineering department",
+      "Special Labs": "CAD/CAM lab, DSP lab, VLSI lab, Networking lab",
+      "Equipment": "Modern equipment as per AICTE and university norms",
+      "Software": "Licensed software: MATLAB, AutoCAD, ANSYS, Oracle, etc.",
+      "Timings": "8:30 AM to 8:00 PM (All days including weekends during project work)",
+      "Technicians": "Qualified lab technicians and assistants"
+    }
+  },
+  {
+    "id": 12,
+    "question_patterns": [
+      "College history",
+      "When established?",
+      "Founder",
+      "കോളേജ് ചരിത്രം",
+      "എപ്പോൾ സ്ഥാപിച്ചു?",
+      "സ്ഥാപകൻ"
+    ],
+    "tags": ["history", "established", "founder", "ചരിത്രം", "സ്ഥാപകൻ"],
+    "answer_facts": {
+      "Established": "1999",
+      "Founder": "Late Sri. L. B. S. (Lingappura Bhaskara Shetty)",
+      "Managed by": "Muliyar Education Trust",
+      "First Principal": "Dr. K. M. Udupa",
+      "Initial Programs": "Started with 3 B.Tech programs",
+      "Growth": "Now offers 5 B.Tech, 3 M.Tech, MBA and MCA programs",
+      "Accreditations": "NBA accredited, NAAC 'B+' grade, ISO 9001:2015 certified",
+      "Motto": "Education for Empowerment"
+    }
+  },
+  {
+    "id": 13,
+    "question_patterns": [
+      "Student clubs",
+      "Technical clubs",
+      "Cultural clubs",
+      "വിദ്യാർത്ഥി ക്ലബ്ബുകൾ",
+      "ടെക്നിക്കൽ ക്ലബ്ബ്",
+      "സാംസ്കാരിക ക്ലബ്ബ്"
+    ],
+    "tags": ["clubs", "associations", "activities", "ക്ലബ്ബ്", "സംഘടന"],
+    "answer_facts": {
+      "Technical Clubs": "IEEE Student Branch, CSI, ISTE, IETE, SAE",
+      "Cultural Clubs": "Music club, Dance club, Drama club, Fine arts club",
+      "Other Clubs": "Entrepreneurship cell, Literary club, Photography club, Nature club",
+      "Events": "Annual tech fest 'TECHSURGE', cultural fest 'RHYTHM'",
+      "Activities": "Workshops, seminars, hackathons, project competitions",
+      "Membership": "Open to all students, nominal membership fee",
+      "Achievements": "National level project competition winners"
+    }
+  },
+  {
+    "id": 14,
+    "question_patterns": [
+      "Transport facility",
+      "College bus",
+      "Bus service",
+      "ട്രാൻസ്പോർട്ട്",
+      "കോളേജ് ബസ്",
+      "ബസ് സർവീസ്"
+    ],
+    "tags": ["transport", "bus", "commute", "ട്രാൻസ്പോർട്ട്", "ബസ്"],
+    "answer_facts": {
+      "Bus Service": "College buses from major towns in Kasaragod district",
+      "Routes": "Kasaragod, Kanhangad, Nileshwar, Bekal, Manjeshwar",
+      "Timings": "Morning pickup and evening drop",
+      "Fees": "₹8,000 per year (approximate)",
+      "Private Vehicles": "Parking facility available for students and staff",
+      "Local Transport": "Auto rickshaws and taxis available near campus",
+      "Safety": "Female attendants in girls' buses, GPS tracking"
+    }
+  },
+  {
+    "id": 15,
+    "question_patterns": [
+      "Faculty details",
+      "Teaching staff",
+      "Professors",
+      "ഫാക്കൽറ്റി",
+      "അദ്ധ്യാപകർ",
+      "പ്രൊഫസർമാർ"
+    ],
+    "tags": ["faculty", "teachers", "professors", "ഫാക്കൽറ്റി", "അദ്ധ്യാപകർ"],
+    "answer_facts": {
+      "Total Faculty": "120+ teaching staff",
+      "Qualifications": "90% faculty with M.Tech/Ph.D degrees",
+      "Experience": "Average 10+ years of teaching experience",
+      "Industry Exposure": "Many faculty with industry experience",
+      "Research": "Active in research publications and funded projects",
+      "Student Ratio": "Approximately 1:15 faculty-student ratio",
+      "Departments": "Separate departments for each engineering discipline",
+      "Development": "Regular faculty development programs and workshops"
+    }
+  }
+]
