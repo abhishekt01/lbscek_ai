@@ -13,13 +13,12 @@
     ],
     "tags": ["courses", "programs", "admissions", "പഠനം", "ബിരുദം"],
     "answer_facts": {
-      "B.Tech Programs": "Computer Science & Engineering, Electronics & Communication Engineering, Electrical & Electronics Engineering, Civil Engineering, Mechanical Engineering",
-      "Duration": "4 years (8 semesters)",
-      "Intake Capacity": "60 students per branch",
+      "UG Programs (B.Tech)": "Computer Science & Engineering (CSE), Electronics & Communication Engineering (ECE), Electrical & Electronics Engineering (EEE), Mechanical Engineering (ME), Civil Engineering (CE), Information Technology (IT)",
+      "PG Programs": "M.Tech in Computer Science & Engineering, Master of Computer Applications (MCA)",
+      "Annual Intake": "480 for UG programs, 18 for PG program in CSE",
+      "Duration": "B.Tech: 4 years (8 semesters)",
       "Approval": "Approved by AICTE and affiliated to APJ Abdul Kalam Technological University",
-      "M.Tech Programs": "Computer Science & Engineering, VLSI & Embedded Systems, Power Systems",
-      "Other Programs": "Master of Business Administration (MBA), Master of Computer Applications (MCA)",
-      "PhD Programs": "Research programs available in all engineering departments"
+      "Additional Info": "MCA program started in 2000 with intake of 35, Civil Engineering added in 2008"
     }
   },
   {
@@ -41,7 +40,7 @@
       "Email": "principal@lbscek.ac.in, office@lbscek.ac.in",
       "Admission Email": "admission@lbscek.ac.in",
       "Address": "LBS College of Engineering, Muliyar, Kasaragod District, Kerala - 671542, India",
-      "Location": "Situated on Kasaragod-Mangalore National Highway (NH 66), 22 km from Kasaragod town",
+      "Location": "Situated in Muliyar Panchayath, 12 km from Kasaragod town",
       "Website": "https://lbscek.ac.in",
       "Office Hours": "9:00 AM to 5:00 PM (Monday to Friday), 9:00 AM to 1:00 PM (Saturday)"
     }
@@ -168,13 +167,13 @@
     ],
     "tags": ["location", "directions", "map", "സ്ഥലം", "ലൊക്കേഷൻ"],
     "answer_facts": {
+      "Full Name": "Lal Bahadur Shastri College of Engineering, Kasaragod",
       "Address": "LBS College of Engineering, Muliyar, Kasaragod District, Kerala - 671542",
-      "Highway": "Located on Kasaragod-Mangalore National Highway (NH 66)",
-      "From Kasaragod": "22 km towards Mangalore, 45 minutes by road",
-      "From Mangalore": "65 km towards Kasaragod, 1.5 hours by road",
-      "Nearest Railway": "Kasaragod Railway Station (25 km)",
-      "Nearest Airport": "Mangalore International Airport (75 km)",
-      "Bus Connectivity": "Regular KSRTC and private buses from Kasaragod and Mangalore",
+      "Campus Area": "52 acres of land at Povval",
+      "Distance from Town": "12 km from Kasaragod town",
+      "Nearest Airport": "Mangaluru Airport (Mangalore International Airport)",
+      "Nearest Railway": "Kasaragod Railway Station",
+      "Tourist Attractions Nearby": "Bekal Fort, Madhur temple, Ananthapuri temple",
       "GPS Coordinates": "12.5960° N, 75.0300° E"
     }
   },
@@ -212,13 +211,14 @@
     ],
     "tags": ["sports", "games", "gym", "സ്പോർട്സ്", "കായികം"],
     "answer_facts": {
+      "Main Stadium": "College main stadium on campus",
+      "Multi-sports Area": "Multi-sports play space available",
       "Playground": "Large playground for cricket, football, volleyball",
       "Indoor Stadium": "Multi-purpose indoor stadium for badminton, table tennis, chess",
       "Gymnasium": "Well-equipped gym with trainer",
       "Sports Offered": "Cricket, football, basketball, volleyball, badminton, table tennis, chess, carrom",
       "Annual Sports": "Inter-collegiate tournaments, annual sports meet",
-      "Coaching": "Professional coaching available for major sports",
-      "Achievements": "University level championships in cricket and athletics"
+      "Coaching": "Professional coaching available for major sports"
     }
   },
   {
@@ -239,6 +239,7 @@
       "Equipment": "Modern equipment as per AICTE and university norms",
       "Software": "Licensed software: MATLAB, AutoCAD, ANSYS, Oracle, etc.",
       "Timings": "8:30 AM to 8:00 PM (All days including weekends during project work)",
+      "Research Centers": "Mechanical Engineering and Computer Science & Engineering recognized as research centres",
       "Technicians": "Qualified lab technicians and assistants"
     }
   },
@@ -254,14 +255,16 @@
     ],
     "tags": ["history", "established", "founder", "ചരിത്രം", "സ്ഥാപകൻ"],
     "answer_facts": {
-      "Established": "1999",
-      "Founder": "Late Sri. L. B. S. (Lingappura Bhaskara Shetty)",
-      "Managed by": "Muliyar Education Trust",
-      "First Principal": "Dr. K. M. Udupa",
-      "Initial Programs": "Started with 3 B.Tech programs",
-      "Growth": "Now offers 5 B.Tech, 3 M.Tech, MBA and MCA programs",
-      "Accreditations": "NBA accredited, NAAC 'B+' grade, ISO 9001:2015 certified",
-      "Motto": "Education for Empowerment"
+      "Established": "1993 (originally started in temporary building in 1995)",
+      "Full Name": "Lal Bahadur Shastri College of Engineering, Kasaragod",
+      "Managed by": "L B S Centre for Science and Technology, Thiruvananthapuram (Government of Kerala autonomous body)",
+      "Initial Programs": "Started with 4 B.Tech programs (ME, EEE, CSE, ECE) with 240 seats",
+      "Campus Development": "Current campus constructed at 52 acres of land given by Plantation Corporation Kerala at Povval",
+      "Growth Timeline": "IT program added in 2000, Civil Engineering in 2008, PG programs added 2013-15",
+      "University Affiliations": "Initially under Calicut University (1993-1996), then Kannur University (1996-2015), now APJ Abdul Kalam Technological University (from 2015)",
+      "Infrastructure Growth": "Started with 20,000 sq.ft., now expanded to 2.5 lakh sq.ft. with separate department buildings",
+      "Vision": "To become a paragon institution for pursuance of Education and Research in Engineering and Technology",
+      "Mission": "Impart finest quality Technical Education & Training, Nurture a vision of Sustainable development, Bequeath it to the next generation of professionals"
     }
   },
   {
@@ -326,6 +329,211 @@
       "Student Ratio": "Approximately 1:15 faculty-student ratio",
       "Departments": "Separate departments for each engineering discipline",
       "Development": "Regular faculty development programs and workshops"
+    }
+  },
+  {
+    "id": 16,
+    "question_patterns": [
+      "Infrastructure details",
+      "Campus facilities",
+      "Buildings",
+      "ഇൻഫ്രാസ്ട്രക്ചർ",
+      "കാമ്പസ് സൗകര്യങ്ങൾ",
+      "കെട്ടിടങ്ങൾ"
+    ],
+    "tags": ["infrastructure", "campus", "buildings", "ഇൻഫ്രാസ്ട്രക്ചർ", "കാമ്പസ്"],
+    "answer_facts": {
+      "Campus Area": "52 acres at Povval",
+      "Total Built-up Area": "2.5 lakh square feet (from initial 20,000 sq.ft.)",
+      "Academic Blocks": "Two academic blocks with 50 classrooms",
+      "Department Buildings": "All departments have separate buildings",
+      "Auditoriums": "Main auditorium with seating capacity of 1500, plus open-air auditorium",
+      "Hostels": "Separate hostels for boys and girls on campus",
+      "Administrative Block": "Dedicated administrative block",
+      "Other Facilities": "Seminar halls, staff rooms, laboratories, college main stadium, multi-sports play space"
+    }
+  },
+  {
+    "id": 17,
+    "question_patterns": [
+      "Research facilities",
+      "Research centres",
+      "PhD programs",
+      "ഗവേഷണ സൗകര്യങ്ങൾ",
+      "ഗവേഷണ കേന്ദ്രങ്ങൾ",
+      "പി എച്ച് ഡി പ്രോഗ്രാമുകൾ"
+    ],
+    "tags": ["research", "phd", "projects", "ഗവേഷണം", "പി.എച്ച്.ഡി."],
+    "answer_facts": {
+      "Research Centers": "Mechanical Engineering and Computer Science & Engineering recognized as research centres",
+      "PhD Programs": "Research programs available in all engineering departments",
+      "PG Programs Added": "Four post graduate programmes added during 2013-15",
+      "Research Focus": "Active research in engineering and technology fields",
+      "Faculty Research": "Faculty involved in funded research projects and publications"
+    }
+  },
+  {
+    "id": 18,
+    "question_patterns": [
+      "College vision and mission",
+      "Vision statement",
+      "Mission statement",
+      "വിഷൻ",
+      "മിഷൻ",
+      "കോളേജിന്റെ ലക്ഷ്യം"
+    ],
+    "tags": ["vision", "mission", "goals", "വിഷൻ", "മിഷൻ"],
+    "answer_facts": {
+      "Vision": "To become a paragon institution for pursuance of Education and Research in Engineering and Technology",
+      "Mission 1": "Impart finest quality Technical Education & Training",
+      "Mission 2": "Nurture a vision of Sustainable development",
+      "Mission 3": "Bequeath it to the next generation of professionals",
+      "Purpose": "Education for Empowerment (as mentioned in existing FAQ)",
+      "Managed by": "L B S Centre for Science and Technology, an autonomous body owned by the Government of Kerala"
+    }
+  },
+
+  {
+    "id": 19,
+    "question_patterns": [
+      "Canteen facilities",
+      "Food court",
+      "Is there a cafeteria?",
+      "Lunch availability",
+      "കാൻറീൻ",
+      "ഭക്ഷണം",
+      "കഫറ്റീരിയ"
+    ],
+    "tags": ["canteen", "food", "cafeteria", "ഭക്ഷണം", "കാൻറീൻ"],
+    "answer_facts": {
+      "Location": "Spacious canteen located near the administrative block",
+      "Menu": "Serves breakfast, lunch, and snacks",
+      "Types of Food": "South Indian and North Indian dishes available (Veg & Non-Veg)",
+      "Hygiene": "Maintained with strict hygiene standards",
+      "Timings": "8:00 AM to 5:00 PM on all working days",
+      "Prices": "Subsidized rates for students and staff"
+    }
+  },
+  {
+    "id": 20,
+    "question_patterns": [
+      "Anti-ragging policy",
+      "Is ragging allowed?",
+      "Complaint cell",
+      "Safety for freshers",
+      "റാഗിംഗ്",
+      "പരാതി",
+      "സുരക്ഷ"
+    ],
+    "tags": ["ragging", "safety", "discipline", "റാഗിംഗ്", "സുരക്ഷ"],
+    "answer_facts": {
+      "Policy": "Zero Tolerance towards ragging",
+      "Committee": "Anti-Ragging Committee and Anti-Ragging Squad are active",
+      "Helpline": "National Anti-Ragging Helpline: 1800-180-5522",
+      "Actions": "Ragging is a criminal offence; perpetrators will be suspended/dismissed",
+      "Monitoring": "CCTV surveillance and faculty squads monitor the campus",
+      "For Freshers": "Separate induction program and orientation to ensure safety"
+    }
+  },
+  {
+    "id": 21,
+    "question_patterns": [
+      "Co-operative store",
+      "Where to buy books?",
+      "Stationery shop",
+      "Student store",
+      "സ്റ്റോർ",
+      "പുസ്തകങ്ങൾ",
+      "സഹകരണ സംഘം"
+    ],
+    "tags": ["store", "books", "stationery", "സ്റ്റോർ", "പുസ്തകം"],
+    "answer_facts": {
+      "Facility": "LBS College Employees Co-operative Society Store",
+      "Items Available": "Textbooks, practical records, engineering drawing instruments, stationery",
+      "Benefits": "Items sold at discounted rates for students",
+      "Services": "Photostat and binding facilities available",
+      "Location": "Centrally located within the campus"
+    }
+  },
+  {
+    "id": 22,
+    "question_patterns": [
+      "Scholarships details",
+      "Financial aid",
+      "E-Grantz",
+      "Fee concession",
+      "സ്കോളർഷിപ്പ്",
+      "ധനസഹായം",
+      "ഫീസ് ഇളവ്"
+    ],
+    "tags": ["scholarship", "financial aid", "grants", "സ്കോളർഷിപ്പ്", "സഹായം"],
+    "answer_facts": {
+      "Government Schemes": "E-Grantz for SC/ST/OEC/SEBC categories",
+      "Central Schemes": "Merit-cum-Means (MCM) Scholarship for minority communities",
+      "AICTE Schemes": "Pragati Scholarship for girls, Saksham for differently-abled",
+      "University Support": "Student support schemes by KTU",
+      "Fee Waiver": "Tuition Fee Waiver (TFW) scheme for meritorious students with lower income"
+    }
+  },
+  {
+    "id": 23,
+    "question_patterns": [
+      "Internet facility",
+      "Wi-Fi details",
+      "Browsing center",
+      "Network speed",
+      "ഇന്റർനെറ്റ്",
+      "വൈഫൈ",
+      "നെറ്റ്‌വർക്ക്"
+    ],
+    "tags": ["internet", "wifi", "network", "ഇന്റർനെറ്റ്", "വൈഫൈ"],
+    "answer_facts": {
+      "Connectivity": "High-speed internet connectivity provided via NKN (National Knowledge Network)",
+      "Wi-Fi": "Campus-wide Wi-Fi access in academic blocks and hostels",
+      "Speed": "1 Gbps backbone connectivity",
+      "Access": "Free access for students and staff for academic purposes",
+      "Computer Center": "Central computing facility available for browsing and research"
+    }
+  },
+  {
+    "id": 24,
+    "question_patterns": [
+      "Banking facilities",
+      "ATM near college",
+      "Bank",
+      "ബാങ്ക്",
+      "എടിഎം",
+      "പണം"
+    ],
+    "tags": ["bank", "atm", "finance", "ബാങ്ക്", "എടിഎം"],
+    "answer_facts": {
+      "Bank": "Nearby branches of nationalized banks (Canara Bank, SBI) within 2km",
+      "ATM": "ATM facility available near the college entrance/main gate area",
+      "Transactions": "College fee payments are fully digital/online",
+      "Loans": "Assistance provided for educational loan documentation"
+    }
+  }
+  ,
+  {
+    "id": 25,
+    "question_patterns": [
+      "Principal name",
+      "Who is the principal?",
+      "College head",
+      "Name of principal",
+      "പ്രിൻസിപ്പാൾ ആരാണ്?",
+      "പ്രിൻസിപ്പൽ",
+      "കോളേജ് മേധാവി"
+    ],
+    "tags": ["principal", "admin", "head", "authority", "പ്രിൻസിപ്പൽ"],
+    "answer_facts": {
+      "Name": "Dr. Mohammad Shekoor T",
+      "Designation": "Principal",
+      "Department": "Mechanical Engineering",
+      "Email": "principal@lbscek.ac.in",
+      "Phone": "04994-250290",
+      "Qualifications": "Ph.D. from NIT Surathkal",
+      "Role": "Head of the Institution"
     }
   }
 ]
