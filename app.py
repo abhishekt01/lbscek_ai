@@ -1,7 +1,3 @@
-"""
-സർവജ്ഞ (Sarva-jña) - LBS College AI Voice Assistant
-A comprehensive voice-enabled assistant with Sarvam AI TTS and auto-play voice responses
-"""
 
 import os
 import json
