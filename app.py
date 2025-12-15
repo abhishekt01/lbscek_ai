@@ -1,8 +1,3 @@
-"""
-സർവജ്ഞ (Sarva-jña) - LBS College AI Voice Assistant
-Smart JSON-based answers with human-like conversational responses
-"""
-
 import os
 import json
 import difflib
@@ -866,6 +861,8 @@ def init_session():
         },
         "kb": None, "lh": None, "ai": None, "ap": None, "ch": None,
         "last_audio": None, "autoplay_pending": False, "welcomed": False,
+        "listening": False, "processing": False, "speaking": False,
+        "is_mobile": False
     }
     
     for key, value in defaults.items():
@@ -882,20 +879,544 @@ def init_session():
         st.session_state.ap = AudioProcessor()
     if st.session_state.ch is None:
         st.session_state.ch = ConversationHandler()
+    
+    # Detect mobile device
+    user_agent = st.query_params.get("user_agent", "")
+    mobile_keywords = ['mobile', 'android', 'iphone', 'ipad', 'tablet']
+    st.session_state.is_mobile = any(keyword in user_agent.lower() for keyword in mobile_keywords)
 
 
 # -------------------------------
-# PAGE CONFIG & STYLES
+# RESPONSIVE CSS STYLES
 # -------------------------------
-st.set_page_config(page_title="സർവജ്ഞ – Voice Assistant", page_icon="🎤", layout="wide")
+st.set_page_config(
+    page_title="സർവജ്ഞ – Voice Assistant", 
+    page_icon="🎤", 
+    layout="wide",
+    initial_sidebar_state="collapsed" if st.session_state.get("is_mobile", False) else "auto"
+)
 
 st.markdown("""
 <style>
-.header { background: linear-gradient(135deg, #1a5276, #2e86ab); color: white; padding: 25px; border-radius: 15px; text-align: center; margin-bottom: 25px; }
-.user-msg { background: linear-gradient(135deg, #e8f5e9, #f1f8e9); padding: 15px; border-radius: 12px; border-left: 4px solid #4caf50; margin: 10px 0; }
-.bot-msg { background: linear-gradient(135deg, #e3f2fd, #bbdefb); padding: 15px; border-radius: 12px; border-left: 4px solid #2196f3; margin: 10px 0; }
-.voice-box { background: linear-gradient(135deg, #fff3e0, #ffe0b2); padding: 25px; border-radius: 15px; border: 2px dashed #ff9800; text-align: center; margin: 15px 0; }
-.welcome-box { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); padding: 20px; border-radius: 15px; border-left: 5px solid #4caf50; margin: 15px 0; }
+/* CSS Variables for easy theming and WCAG compliance */
+:root {
+    /* Main colors - tested for WCAG compliance */
+    --color-primary: #1a5276;       /* Header/primary blue */
+    --color-primary-light: #2e86ab; /* Active state */
+    --color-secondary: #4caf50;     /* User message accent */
+    --color-accent: #ff9800;        /* Voice recording accent */
+    
+    /* Background colors with good contrast */
+    --color-bg-main: #f8f9fa;       /* Off-white main background */
+    --color-bg-card: #ffffff;       /* Card backgrounds */
+    --color-bg-sidebar: #e8eaf6;    /* Sidebar background */
+    
+    /* Text colors with high contrast */
+    --color-text-primary: #1a1a1a;  /* Near-black for main text */
+    --color-text-secondary: #424242; /* Secondary text */
+    --color-text-light: #757575;    /* Light text */
+    --color-text-white: #ffffff;    /* White text for dark backgrounds */
+    
+    /* Message bubbles */
+    --color-user-bg: #e8f5e9;       /* User message background */
+    --color-bot-bg: #e3f2fd;        /* Bot message background */
+    
+    /* Status colors */
+    --color-success: #4caf50;       /* Success/active */
+    --color-warning: #ff9800;       /* Warning/recording */
+    --color-info: #2196f3;          /* Info/thinking */
+    
+    /* Typography */
+    --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --font-size-xs: 0.75rem;    /* 12px */
+    --font-size-sm: 0.875rem;   /* 14px */
+    --font-size-base: 1rem;     /* 16px */
+    --font-size-lg: 1.125rem;   /* 18px */
+    --font-size-xl: 1.25rem;    /* 20px */
+    --font-size-2xl: 1.5rem;    /* 24px */
+    --font-size-3xl: 1.875rem;  /* 30px */
+    
+    /* Spacing */
+    --spacing-xs: 0.25rem;      /* 4px */
+    --spacing-sm: 0.5rem;       /* 8px */
+    --spacing-md: 1rem;         /* 16px */
+    --spacing-lg: 1.5rem;       /* 24px */
+    --spacing-xl: 2rem;         /* 32px */
+    
+    /* Border radius */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+    
+    /* Animation speeds */
+    --speed-fast: 0.3s;
+    --speed-normal: 0.5s;
+    --speed-slow: 1s;
+}
+
+/* Animation Keyframes */
+@keyframes pulse-wave {
+    0%, 100% { 
+        transform: scaleY(0.4);
+        opacity: 0.6;
+    }
+    50% { 
+        transform: scaleY(1);
+        opacity: 1;
+    }
+}
+
+@keyframes gentle-pulse {
+    0%, 100% { 
+        opacity: 1;
+    }
+    50% { 
+        opacity: 0.7;
+    }
+}
+
+@keyframes recording-pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 152, 0, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(255, 152, 0, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(255, 152, 0, 0);
+    }
+}
+
+@keyframes sound-wave {
+    0% {
+        height: 20%;
+        background: var(--color-primary-light);
+    }
+    25% {
+        height: 60%;
+        background: var(--color-primary);
+    }
+    50% {
+        height: 100%;
+        background: var(--color-primary-light);
+    }
+    75% {
+        height: 60%;
+        background: var(--color-primary);
+    }
+    100% {
+        height: 20%;
+        background: var(--color-primary-light);
+    }
+}
+
+/* Base Styles */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--color-bg-main);
+    color: var(--color-text-primary);
+    margin: 0;
+    padding: 0;
+    font-size: var(--font-size-base);
+    line-height: 1.5;
+}
+
+/* Responsive Container */
+.main-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--spacing-md);
+}
+
+/* Header */
+.header {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+    color: var(--color-text-white);
+    padding: var(--spacing-xl) var(--spacing-lg);
+    border-radius: var(--radius-xl);
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #4caf50, #2196f3, #ff9800);
+}
+
+.header h1 {
+    font-size: var(--font-size-3xl);
+    margin-bottom: var(--spacing-sm);
+    font-weight: 700;
+}
+
+.header p {
+    font-size: var(--font-size-lg);
+    opacity: 0.9;
+    margin: 0;
+}
+
+/* Status Indicators */
+.status-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+}
+
+.status-indicator.online {
+    background-color: rgba(76, 175, 80, 0.1);
+    color: var(--color-success);
+}
+
+.status-indicator.offline {
+    background-color: rgba(244, 67, 54, 0.1);
+    color: #f44336;
+}
+
+.status-indicator.listening {
+    background-color: rgba(255, 152, 0, 0.1);
+    color: var(--color-warning);
+    animation: recording-pulse 1.5s infinite;
+}
+
+.status-indicator.thinking {
+    background-color: rgba(33, 150, 243, 0.1);
+    color: var(--color-info);
+    animation: gentle-pulse 2s infinite;
+}
+
+.status-indicator.speaking {
+    background-color: rgba(26, 82, 118, 0.1);
+    color: var(--color-primary);
+}
+
+/* Message Bubbles */
+.user-msg {
+    background-color: var(--color-user-bg);
+    color: var(--color-text-primary);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-lg);
+    border-left: 4px solid var(--color-secondary);
+    margin: var(--spacing-md) 0;
+    max-width: 85%;
+    margin-left: auto;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: transform var(--speed-fast) ease;
+}
+
+.user-msg:hover {
+    transform: translateX(-2px);
+}
+
+.bot-msg {
+    background-color: var(--color-bot-bg);
+    color: var(--color-text-primary);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-lg);
+    border-left: 4px solid var(--color-primary-light);
+    margin: var(--spacing-md) 0;
+    max-width: 85%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: transform var(--speed-fast) ease;
+}
+
+.bot-msg:hover {
+    transform: translateX(2px);
+}
+
+.message-time {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-light);
+    margin-top: var(--spacing-xs);
+    display: block;
+}
+
+/* Voice Box */
+.voice-box {
+    background-color: var(--color-bg-card);
+    border: 2px dashed var(--color-accent);
+    padding: var(--spacing-xl);
+    border-radius: var(--radius-xl);
+    text-align: center;
+    margin: var(--spacing-lg) 0;
+    transition: all var(--speed-normal) ease;
+    position: relative;
+}
+
+.voice-box.recording {
+    border-style: solid;
+    border-color: var(--color-warning);
+    background-color: rgba(255, 152, 0, 0.05);
+    animation: recording-pulse 1.5s infinite;
+}
+
+.voice-box h4 {
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-sm);
+    font-size: var(--font-size-lg);
+}
+
+.voice-box p {
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-md);
+}
+
+/* Sound Wave Animation */
+.sound-wave-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    height: 60px;
+    gap: 3px;
+    margin: var(--spacing-md) 0;
+}
+
+.sound-wave-bar {
+    width: 6px;
+    background: linear-gradient(to top, var(--color-primary-light), var(--color-primary));
+    border-radius: 3px;
+}
+
+.sound-wave-bar.animated {
+    animation: sound-wave 1s ease-in-out infinite;
+}
+
+.sound-wave-bar:nth-child(2) { animation-delay: 0.1s; }
+.sound-wave-bar:nth-child(3) { animation-delay: 0.2s; }
+.sound-wave-bar:nth-child(4) { animation-delay: 0.3s; }
+.sound-wave-bar:nth-child(5) { animation-delay: 0.4s; }
+.sound-wave-bar:nth-child(6) { animation-delay: 0.5s; }
+.sound-wave-bar:nth-child(7) { animation-delay: 0.6s; }
+
+/* Buttons */
+.stButton > button {
+    border-radius: var(--radius-md);
+    font-weight: 500;
+    transition: all var(--speed-fast) ease;
+    border: none;
+}
+
+.stButton > button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.primary-button {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+    color: white;
+}
+
+.secondary-button {
+    background-color: var(--color-bg-card);
+    color: var(--color-primary);
+    border: 1px solid var(--color-primary-light);
+}
+
+/* Welcome Box */
+.welcome-box {
+    background: linear-gradient(135deg, rgba(232, 245, 233, 0.9), rgba(200, 230, 201, 0.9));
+    padding: var(--spacing-xl);
+    border-radius: var(--radius-xl);
+    border-left: 5px solid var(--color-secondary);
+    margin: var(--spacing-lg) 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(10px);
+}
+
+.welcome-box h4 {
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-sm);
+    font-size: var(--font-size-xl);
+}
+
+.welcome-box p {
+    color: var(--color-text-secondary);
+    margin: 0;
+}
+
+/* Sidebar */
+.css-1d391kg {
+    background-color: var(--color-bg-sidebar);
+}
+
+/* Quick Questions Grid */
+.quick-questions-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-md);
+}
+
+/* Responsive Design */
+/* Mobile (up to 768px) */
+@media (max-width: 768px) {
+    .main-container {
+        padding: var(--spacing-sm);
+    }
+    
+    .header {
+        padding: var(--spacing-lg) var(--spacing-md);
+        margin-bottom: var(--spacing-lg);
+    }
+    
+    .header h1 {
+        font-size: var(--font-size-2xl);
+    }
+    
+    .header p {
+        font-size: var(--font-size-base);
+    }
+    
+    .user-msg,
+    .bot-msg {
+        max-width: 95%;
+        padding: var(--spacing-sm);
+        font-size: var(--font-size-sm);
+    }
+    
+    .voice-box {
+        padding: var(--spacing-lg);
+    }
+    
+    .quick-questions-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    /* Hide sidebar on mobile, use bottom navigation */
+    .css-1d391kg {
+        display: none;
+    }
+    
+    /* Mobile bottom navigation */
+    .mobile-nav {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: var(--color-bg-card);
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+        padding: var(--spacing-sm);
+        z-index: 1000;
+        display: flex;
+        justify-content: space-around;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .mobile-nav button {
+        flex: 1;
+        margin: 0 var(--spacing-xs);
+    }
+}
+
+/* Tablet (769px to 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .header h1 {
+        font-size: var(--font-size-2xl);
+    }
+    
+    .user-msg,
+    .bot-msg {
+        max-width: 90%;
+    }
+    
+    .quick-questions-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Desktop (1025px and above) */
+@media (min-width: 1025px) {
+    .main-container {
+        padding: var(--spacing-xl);
+    }
+    
+    .quick-questions-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* Loading Spinner */
+.thinking-spinner {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    color: var(--color-info);
+    font-style: italic;
+    padding: var(--spacing-sm);
+}
+
+.thinking-spinner::after {
+    content: '';
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--color-info);
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--color-bg-main);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--color-primary-light);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--color-primary);
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Focus styles for keyboard navigation */
+:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+:focus:not(:focus-visible) {
+    outline: none;
+}
+
+:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -903,10 +1424,138 @@ init_session()
 
 
 # -------------------------------
+# RESPONSIVE LAYOUT COMPONENTS
+# -------------------------------
+def create_mobile_navigation():
+    """Create bottom navigation for mobile devices"""
+    if st.session_state.is_mobile:
+        st.markdown("""
+        <div class="mobile-nav">
+            <style>
+                .mobile-nav {
+                    position: fixed;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    background: var(--color-bg-card);
+                    border-top: 1px solid rgba(0, 0, 0, 0.1);
+                    padding: var(--spacing-sm);
+                    z-index: 1000;
+                    display: flex;
+                    justify-content: space-around;
+                    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+                }
+                .mobile-nav button {
+                    flex: 1;
+                    margin: 0 var(--spacing-xs);
+                    font-size: var(--font-size-sm);
+                    padding: var(--spacing-xs) var(--spacing-sm);
+                }
+            </style>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        col1, col2, col3, col4 = st.columns(4)
+        with col1:
+            if st.button("🏠", key="mobile_home", use_container_width=True, help="Home"):
+                clear_chat()
+                st.rerun()
+        with col2:
+            if st.button("🎤", key="mobile_mic", use_container_width=True, help="Record"):
+                st.session_state.listening = not st.session_state.listening
+                st.rerun()
+        with col3:
+            if st.button("⚙️", key="mobile_settings", use_container_width=True, help="Settings"):
+                # Open settings in a dialog/modal
+                st.session_state.show_settings = True
+                st.rerun()
+        with col4:
+            if st.button("🗑️", key="mobile_clear", use_container_width=True, help="Clear Chat"):
+                clear_chat()
+                st.rerun()
+
+def create_status_bar():
+    """Create responsive status bar"""
+    col1, col2, col3 = st.columns(3)
+    
+    with col1:
+        status_text = "🟢 On" if st.session_state.preferences['voice_enabled'] else "🔴 Off"
+        status_class = "online" if st.session_state.preferences['voice_enabled'] else "offline"
+        if st.session_state.listening:
+            status_text = "🎤 Listening"
+            status_class = "listening"
+        elif st.session_state.processing:
+            status_text = "⚡ Thinking"
+            status_class = "thinking"
+        elif st.session_state.speaking:
+            status_text = "🔊 Speaking"
+            status_class = "speaking"
+        
+        st.markdown(f'<div class="status-indicator {status_class}">{status_text}</div>', unsafe_allow_html=True)
+    
+    with col2:
+        lang_text = "മലയാളം" if st.session_state.preferences['tts_language'] == 'ml' else 'English'
+        st.markdown(f'<div class="status-indicator">🌐 {lang_text}</div>', unsafe_allow_html=True)
+    
+    with col3:
+        speaker_name = st.session_state.preferences['speaker'].title()
+        st.markdown(f'<div class="status-indicator">👤 {speaker_name}</div>', unsafe_allow_html=True)
+
+def create_sound_wave_animation():
+    """Create sound wave animation for listening state"""
+    if st.session_state.listening:
+        st.markdown("""
+        <div class="sound-wave-container">
+            <div class="sound-wave-bar animated"></div>
+            <div class="sound-wave-bar animated"></div>
+            <div class="sound-wave-bar animated"></div>
+            <div class="sound-wave-bar animated"></div>
+            <div class="sound-wave-bar animated"></div>
+            <div class="sound-wave-bar animated"></div>
+            <div class="sound-wave-bar animated"></div>
+        </div>
+        """, unsafe_allow_html=True)
+
+def create_quick_questions_grid():
+    """Create responsive grid for quick questions"""
+    questions = [
+        ("📞", "Phone?", "What is the phone number?"),
+        ("📍", "Location?", "Where is the college located?"),
+        ("📧", "Email?", "What is the email address?"),
+        ("💰", "Fees?", "What are the fees?"),
+        ("📚", "Courses?", "What courses are available?"),
+        ("🏠", "Hostel?", "Tell me about hostel"),
+        ("💼", "Placement?", "What about placements?"),
+        ("🕐", "Timing?", "What is the college timing?"),
+    ]
+    
+    # Use different layouts based on screen size
+    if st.session_state.is_mobile:
+        cols = st.columns(2)
+        for idx, (icon, label, question) in enumerate(questions):
+            with cols[idx % 2]:
+                if st.button(f"{icon} {label}", key=f"quick_{label}", use_container_width=True):
+                    process_query(question)
+                    st.rerun()
+    else:
+        # Create a responsive grid
+        cols = st.columns(4)
+        for idx, (icon, label, question) in enumerate(questions):
+            with cols[idx % 4]:
+                if st.button(f"{icon} {label}", key=f"quick_{label}", use_container_width=True):
+                    process_query(question)
+                    st.rerun()
+
+
+# -------------------------------
 # CORE FUNCTIONS
 # -------------------------------
 def process_query(query: str, is_voice: bool = False):
     """Process user query and generate voice response"""
+    
+    # Set processing state
+    st.session_state.processing = True
+    st.session_state.listening = False
     
     # Check if it's conversational
     is_conv, conv_response, conv_type = st.session_state.ch.is_conversation_query(query)
@@ -941,10 +1590,24 @@ def process_query(query: str, is_voice: bool = False):
             loudness=prefs["loudness"]
         )
     
+    # Update states
+    st.session_state.processing = False
+    st.session_state.speaking = audio_bytes is not None
+    
     # Save messages
     timestamp = datetime.now().strftime("%H:%M")
-    st.session_state.messages.append({"role": "user", "content": query, "time": timestamp, "is_voice": is_voice})
-    st.session_state.messages.append({"role": "assistant", "content": response, "time": timestamp, "audio": audio_bytes})
+    st.session_state.messages.append({
+        "role": "user", 
+        "content": query, 
+        "time": timestamp, 
+        "is_voice": is_voice
+    })
+    st.session_state.messages.append({
+        "role": "assistant", 
+        "content": response, 
+        "time": timestamp, 
+        "audio": audio_bytes
+    })
     
     if audio_bytes and st.session_state.preferences["auto_play"]:
         st.session_state.last_audio = audio_bytes
@@ -964,7 +1627,13 @@ def generate_welcome():
             pace=st.session_state.ap.get_pace_value(prefs["speech_rate"])
         )
     
-    st.session_state.messages.append({"role": "assistant", "content": welcome_text, "time": timestamp, "audio": audio_bytes, "is_welcome": True})
+    st.session_state.messages.append({
+        "role": "assistant", 
+        "content": welcome_text, 
+        "time": timestamp, 
+        "audio": audio_bytes, 
+        "is_welcome": True
+    })
     
     if audio_bytes and st.session_state.preferences["auto_play"]:
         st.session_state.last_audio = audio_bytes
@@ -978,132 +1647,320 @@ def clear_chat():
     st.session_state.last_audio = None
     st.session_state.autoplay_pending = False
     st.session_state.welcomed = False
+    st.session_state.listening = False
+    st.session_state.processing = False
+    st.session_state.speaking = False
 
 
 # -------------------------------
-# SIDEBAR
+# SIDEBAR (Desktop only)
 # -------------------------------
-with st.sidebar:
-    st.markdown("## 🎤 സർവജ്ഞ")
-    st.caption("LBS College Voice Assistant")
-    st.divider()
-    
-    st.markdown("### 🔊 Voice Settings")
-    st.session_state.preferences["auto_play"] = st.checkbox("Auto-play responses", value=st.session_state.preferences["auto_play"])
-    st.session_state.preferences["voice_enabled"] = st.checkbox("Enable voice", value=st.session_state.preferences["voice_enabled"])
-    
-    if st.session_state.preferences["voice_enabled"]:
-        lang = st.radio("Language", ["Malayalam", "English"], index=0 if st.session_state.preferences["tts_language"] == "ml" else 1)
-        st.session_state.preferences["tts_language"] = "ml" if lang == "Malayalam" else "en"
+if not st.session_state.is_mobile:
+    with st.sidebar:
+        st.markdown("## 🎤 സർവജ്ഞ")
+        st.caption("LBS College Voice Assistant")
+        st.divider()
         
-        st.session_state.preferences["speaker"] = st.selectbox("Voice", ["arya", "meera", "pavithra", "maitreyi"])
-        st.session_state.preferences["speech_rate"] = st.select_slider("Speed", ["Slow", "Normal", "Fast"], value=st.session_state.preferences["speech_rate"])
-    
-    st.divider()
-    if st.button("🗑️ Clear Chat", use_container_width=True):
-        clear_chat()
-        st.rerun()
-    if st.button("👋 Say Welcome", use_container_width=True):
-        generate_welcome()
-        st.rerun()
-    
-    st.divider()
-    st.markdown("### 💬 Try asking:")
-    st.markdown("- *Phone number?*\n- *Where is college?*\n- *Fee details?*\n- *Sugamano?*")
+        st.markdown("### 🔊 Voice Settings")
+        st.session_state.preferences["auto_play"] = st.checkbox(
+            "Auto-play responses", 
+            value=st.session_state.preferences["auto_play"]
+        )
+        st.session_state.preferences["voice_enabled"] = st.checkbox(
+            "Enable voice", 
+            value=st.session_state.preferences["voice_enabled"]
+        )
+        
+        if st.session_state.preferences["voice_enabled"]:
+            lang = st.radio(
+                "Language", 
+                ["Malayalam", "English"], 
+                index=0 if st.session_state.preferences["tts_language"] == "ml" else 1
+            )
+            st.session_state.preferences["tts_language"] = "ml" if lang == "Malayalam" else "en"
+            
+            st.session_state.preferences["speaker"] = st.selectbox(
+                "Voice", 
+                ["arya", "meera", "pavithra", "maitreyi"],
+                index=0
+            )
+            st.session_state.preferences["speech_rate"] = st.select_slider(
+                "Speed", 
+                ["Slow", "Normal", "Fast"], 
+                value=st.session_state.preferences["speech_rate"]
+            )
+        
+        st.divider()
+        col1, col2 = st.columns(2)
+        with col1:
+            if st.button("🗑️ Clear Chat", use_container_width=True):
+                clear_chat()
+                st.rerun()
+        with col2:
+            if st.button("👋 Welcome", use_container_width=True):
+                generate_welcome()
+                st.rerun()
+        
+        st.divider()
+        st.markdown("### 💬 Try asking:")
+        st.markdown("""
+        - *Phone number?*
+        - *Where is college?*
+        - *Fee details?*
+        - *Sugamano?*
+        """)
+        
+        st.divider()
+        st.markdown("### ⚡ Quick Actions")
+        if st.button("🎤 Start Recording", use_container_width=True):
+            st.session_state.listening = True
+            st.rerun()
+        
+        if st.button("⏹️ Stop Recording", use_container_width=True):
+            st.session_state.listening = False
+            st.rerun()
 
 
 # -------------------------------
 # MAIN CONTENT
 # -------------------------------
-st.markdown('''<div class="header"><h1>🎤 സർവജ്ഞ</h1><p>Your Friendly LBS College Voice Assistant</p></div>''', unsafe_allow_html=True)
+st.markdown('<div class="main-container">', unsafe_allow_html=True)
+
+# Header
+st.markdown('''
+<div class="header">
+    <h1>🎤 സർവജ്ഞ</h1>
+    <p>Your Friendly LBS College Voice Assistant</p>
+</div>
+''', unsafe_allow_html=True)
 
 # Auto-welcome
 if not st.session_state.welcomed and not st.session_state.messages:
     generate_welcome()
     st.rerun()
 
-# Status bar
-col1, col2, col3 = st.columns(3)
-with col1:
-    st.markdown(f"**Voice:** {'🟢 On' if st.session_state.preferences['voice_enabled'] else '🔴 Off'}")
-with col2:
-    st.markdown(f"**Language:** {'മലയാളം' if st.session_state.preferences['tts_language'] == 'ml' else 'English'}")
-with col3:
-    st.markdown(f"**Voice:** {st.session_state.preferences['speaker'].title()}")
+# Status Bar
+create_status_bar()
 
 st.divider()
 
-# Main layout
-main_col, side_col = st.columns([3, 1])
-
-with main_col:
-    tab1, tab2 = st.tabs(["💬 Type", "🎤 Speak"])
+# Main layout based on device
+if st.session_state.is_mobile:
+    # Mobile layout
+    create_mobile_navigation()
     
-    with tab1:
-        user_input = st.text_input("Chat with me:", placeholder="Ask anything! e.g., 'What is the phone number?' or 'Sugamano?'")
-        col_send, col_greet = st.columns([3, 1])
-        with col_send:
-            if st.button("📤 Send", type="primary", use_container_width=True) and user_input.strip():
-                process_query(user_input.strip())
-                st.rerun()
-        with col_greet:
-            if st.button("👋 Hi!", use_container_width=True):
-                process_query("Hello!")
-                st.rerun()
-    
-    with tab2:
-        st.markdown('<div class="voice-box"><h4>🎙️ Speak in Malayalam!</h4><p>Click to record your question</p></div>', unsafe_allow_html=True)
-        voice_text = speech_to_text(language='ml-IN', start_prompt="🎙️ Record", stop_prompt="⏹️ Stop", just_once=True, use_container_width=True, key="voice_input")
+    # Voice recording section
+    with st.container():
+        st.markdown("### 🎤 Voice Input")
+        
+        # Show sound wave animation when listening
+        if st.session_state.listening:
+            create_sound_wave_animation()
+            st.markdown('<div class="voice-box recording">', unsafe_allow_html=True)
+        else:
+            st.markdown('<div class="voice-box">', unsafe_allow_html=True)
+        
+        st.markdown("<h4>Speak your question</h4>", unsafe_allow_html=True)
+        
+        # Voice input
+        voice_text = speech_to_text(
+            language='ml-IN',
+            start_prompt="🎙️ Start Recording",
+            stop_prompt="⏹️ Stop",
+            just_once=True,
+            use_container_width=True,
+            key="voice_input_mobile"
+        )
+        
         if voice_text:
             st.info(f"🎤 I heard: {voice_text}")
             process_query(voice_text, is_voice=True)
             st.rerun()
+        
+        st.markdown('</div>', unsafe_allow_html=True)
     
+    # Text input section
+    with st.container():
+        st.markdown("### 💬 Text Input")
+        user_input = st.text_input(
+            "Type your question:",
+            placeholder="Ask anything about LBS College...",
+            key="mobile_text_input"
+        )
+        
+        col1, col2 = st.columns(2)
+        with col1:
+            if st.button("📤 Send", type="primary", use_container_width=True) and user_input.strip():
+                process_query(user_input.strip())
+                st.rerun()
+        with col2:
+            if st.button("👋 Hello", use_container_width=True):
+                process_query("Hello!")
+                st.rerun()
+    
+    # Quick questions
+    st.divider()
+    st.markdown("### ⚡ Quick Questions")
+    create_quick_questions_grid()
+    
+    # Conversation history
     st.divider()
     st.markdown("### 💬 Conversation")
     
     if not st.session_state.messages:
-        st.markdown('<div class="welcome-box"><h4>👋 Hello!</h4><p>Ask me about LBS College - phone, email, courses, fees, anything!</p></div>', unsafe_allow_html=True)
+        st.markdown('''
+        <div class="welcome-box">
+            <h4>👋 Hello!</h4>
+            <p>Ask me about LBS College - phone, email, courses, fees, anything!</p>
+        </div>
+        ''', unsafe_allow_html=True)
     
+    # Display messages with mobile-optimized styling
     for msg in st.session_state.messages:
         if msg["role"] == "user":
             icon = "🎤" if msg.get("is_voice") else "💬"
-            st.markdown(f'<div class="user-msg"><strong>You {icon}</strong> ({msg["time"]})<br>{msg["content"]}</div>', unsafe_allow_html=True)
+            st.markdown(
+                f'<div class="user-msg">'
+                f'<strong>You {icon}</strong> '
+                f'<span class="message-time">({msg["time"]})</span><br>'
+                f'{msg["content"]}'
+                f'</div>',
+                unsafe_allow_html=True
+            )
         else:
-            st.markdown(f'<div class="bot-msg"><strong>🤖 സർവജ്ഞ</strong> ({msg["time"]})<br>{msg["content"]}</div>', unsafe_allow_html=True)
+            st.markdown(
+                f'<div class="bot-msg">'
+                f'<strong>🤖 സർവജ്ഞ</strong> '
+                f'<span class="message-time">({msg["time"]})</span><br>'
+                f'{msg["content"]}'
+                f'</div>',
+                unsafe_allow_html=True
+            )
             if msg.get("audio"):
                 st.audio(msg["audio"], format="audio/wav")
     
+    # Auto-play audio
     if st.session_state.autoplay_pending and st.session_state.last_audio:
         st.session_state.autoplay_pending = False
-        st.markdown(st.session_state.ap.create_autoplay_html(st.session_state.last_audio), unsafe_allow_html=True)
+        st.session_state.speaking = True
+        st.markdown(
+            st.session_state.ap.create_autoplay_html(st.session_state.last_audio),
+            unsafe_allow_html=True
+        )
 
-with side_col:
-    st.markdown("### 💬 Quick Chat")
-    for label, query in [("👋 Hello!", "Hello!"), ("🙏 നമസ്കാരം", "നമസ്കാരം"), ("😊 Sugamano?", "Sugamano?")]:
-        if st.button(label, key=f"greet_{label}", use_container_width=True):
-            process_query(query)
-            st.rerun()
+else:
+    # Desktop layout
+    main_col, side_col = st.columns([3, 1])
     
-    st.divider()
-    st.markdown("### ⚡ Quick Questions")
+    with main_col:
+        tab1, tab2 = st.tabs(["💬 Type", "🎤 Speak"])
+        
+        with tab1:
+            user_input = st.text_input(
+                "Chat with me:", 
+                placeholder="Ask anything! e.g., 'What is the phone number?' or 'Sugamano?'",
+                key="desktop_text_input"
+            )
+            col_send, col_greet = st.columns([3, 1])
+            with col_send:
+                if st.button("📤 Send", type="primary", use_container_width=True) and user_input.strip():
+                    process_query(user_input.strip())
+                    st.rerun()
+            with col_greet:
+                if st.button("👋 Hi!", use_container_width=True):
+                    process_query("Hello!")
+                    st.rerun()
+        
+        with tab2:
+            st.markdown('<div class="voice-box">', unsafe_allow_html=True)
+            st.markdown('<h4>🎙️ Speak in Malayalam!</h4><p>Click to record your question</p>', unsafe_allow_html=True)
+            
+            # Show sound wave animation when listening
+            if st.session_state.listening:
+                create_sound_wave_animation()
+            
+            voice_text = speech_to_text(
+                language='ml-IN', 
+                start_prompt="🎙️ Start Recording", 
+                stop_prompt="⏹️ Stop", 
+                just_once=True, 
+                use_container_width=True, 
+                key="voice_input_desktop"
+            )
+            if voice_text:
+                st.info(f"🎤 I heard: {voice_text}")
+                process_query(voice_text, is_voice=True)
+                st.rerun()
+            
+            st.markdown('</div>', unsafe_allow_html=True)
+        
+        st.divider()
+        st.markdown("### 💬 Conversation")
+        
+        if not st.session_state.messages:
+            st.markdown('''
+            <div class="welcome-box">
+                <h4>👋 Hello!</h4>
+                <p>Ask me about LBS College - phone, email, courses, fees, anything!</p>
+            </div>
+            ''', unsafe_allow_html=True)
+        
+        for msg in st.session_state.messages:
+            if msg["role"] == "user":
+                icon = "🎤" if msg.get("is_voice") else "💬"
+                st.markdown(
+                    f'<div class="user-msg">'
+                    f'<strong>You {icon}</strong> '
+                    f'<span class="message-time">({msg["time"]})</span><br>'
+                    f'{msg["content"]}'
+                    f'</div>',
+                    unsafe_allow_html=True
+                )
+            else:
+                st.markdown(
+                    f'<div class="bot-msg">'
+                    f'<strong>🤖 സർവജ്ഞ</strong> '
+                    f'<span class="message-time">({msg["time"]})</span><br>'
+                    f'{msg["content"]}'
+                    f'</div>',
+                    unsafe_allow_html=True
+                )
+                if msg.get("audio"):
+                    st.audio(msg["audio"], format="audio/wav")
+        
+        if st.session_state.autoplay_pending and st.session_state.last_audio:
+            st.session_state.autoplay_pending = False
+            st.session_state.speaking = True
+            st.markdown(
+                st.session_state.ap.create_autoplay_html(st.session_state.last_audio),
+                unsafe_allow_html=True
+            )
     
-    questions = [
-        ("📞 Phone?", "What is the phone number?"),
-        ("📍 Location?", "Where is the college located?"),
-        ("📧 Email?", "What is the email address?"),
-        ("💰 Fees?", "What are the fees?"),
-        ("📚 Courses?", "What courses are available?"),
-        ("🏠 Hostel?", "Tell me about hostel"),
-        ("💼 Placement?", "What about placements?"),
-        ("🕐 Timing?", "What is the college timing?"),
-    ]
-    
-    for label, question in questions:
-        if st.button(label, key=f"q_{label}", use_container_width=True):
-            process_query(question)
-            st.rerun()
+    with side_col:
+        st.markdown("### 💬 Quick Chat")
+        for label, query in [("👋 Hello!", "Hello!"), ("🙏 നമസ്കാരം", "നമസ്കാരം"), ("😊 Sugamano?", "Sugamano?")]:
+            if st.button(label, key=f"greet_{label}", use_container_width=True):
+                process_query(query)
+                st.rerun()
+        
+        st.divider()
+        st.markdown("### ⚡ Quick Questions")
+        create_quick_questions_grid()
 
 # Footer
+st.markdown('</div>', unsafe_allow_html=True)
+
 st.divider()
-st.markdown('<div style="text-align:center; color:#666; padding:15px;"><p>🎓 <strong>LBS College of Engineering, Kasaragod</strong></p><p>🔊 Powered by <strong>Sarvam AI</strong></p></div>', unsafe_allow_html=True)
+st.markdown('''
+<div style="text-align:center; color:var(--color-text-secondary); padding:var(--spacing-lg);">
+    <p>🎓 <strong>LBS College of Engineering, Kasaragod</strong></p>
+    <p>🔊 Powered by <strong>Sarvam AI</strong></p>
+</div>
+''', unsafe_allow_html=True)
+
+# Clean up states after audio playback
+if st.session_state.speaking and not st.session_state.autoplay_pending:
+    # Reset speaking state after a delay
+    import time
+    time.sleep(1)
+    st.session_state.speaking = False
