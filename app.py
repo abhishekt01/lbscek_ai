@@ -1,6 +1,6 @@
 """
 സർവജ്ഞ (Sarva-jña) - LBS College AI Voice Assistant
-Voice-optimized assistant with short, natural responses for Sarvam AI TTS
+A comprehensive voice-enabled assistant with Sarvam AI TTS and auto-play voice responses
 """
 
 import os
@@ -31,11 +31,11 @@ PPLX_API_KEY = os.getenv("PPLX_API_KEY")
 SARVAM_API_KEY = os.getenv("SARVAM_API_KEY")
 
 if not PPLX_API_KEY:
-    st.error("⚠️ PPLX_API_KEY is missing!")
+    st.error("⚠️ PPLX_API_KEY is missing! Please create a .env file with your API key.")
     st.stop()
 
 if not SARVAM_API_KEY:
-    st.error("⚠️ SARVAM_API_KEY is missing!")
+    st.error("⚠️ SARVAM_API_KEY is missing! Please add it to your .env file.")
     st.stop()
 
 # -------------------------------
@@ -68,6 +68,7 @@ class KnowledgeBase:
                 with open(f"data/{self.file_path}", "r", encoding="utf-8") as f:
                     self.faqs = json.load(f)
             else:
+                st.warning(f"Knowledge base file not found.")
                 self.faqs = []
         except Exception as e:
             st.error(f"Error loading knowledge base: {e}")
@@ -82,14 +83,12 @@ class KnowledgeBase:
         
         q_norm = self._normalize(query)
         
-        # Direct pattern matching
         for entry in self.faqs:
             for pattern in entry.get("question_patterns", []):
                 p_norm = self._normalize(pattern)
                 if p_norm in q_norm or q_norm in p_norm:
                     return entry
         
-        # Tag-based matching
         all_tags = []
         tag_to_entry = {}
         for entry in self.faqs:
@@ -101,42 +100,6 @@ class KnowledgeBase:
         close_matches = difflib.get_close_matches(q_norm, all_tags, n=1, cutoff=0.5)
         if close_matches:
             return tag_to_entry[close_matches[0]]
-        
-        return None
-    
-    def extract_specific_answer(self, query: str, kb_entry: Dict[str, Any]) -> Optional[str]:
-        """Extract only the specific answer related to the query"""
-        if not kb_entry:
-            return None
-        
-        facts = kb_entry.get("answer_facts", {})
-        q_lower = query.lower()
-        
-        # Keywords to fact mapping
-        keyword_mapping = {
-            "phone": ["phone", "contact_phone", "telephone", "mobile"],
-            "email": ["email", "contact_email", "mail"],
-            "address": ["address", "location", "place"],
-            "time": ["timing", "hours", "time", "schedule"],
-            "fee": ["fee", "fees", "cost", "price", "amount"],
-            "course": ["courses", "programs", "departments"],
-            "principal": ["principal", "head"],
-            "website": ["website", "url", "site"],
-            "admission": ["admission", "apply", "eligibility"],
-            "hostel": ["hostel", "accommodation", "rooms"],
-            "library": ["library", "books", "reading"],
-            "placement": ["placement", "jobs", "recruitment"],
-            "bus": ["bus", "transport", "route"],
-            "canteen": ["canteen", "food", "mess"],
-        }
-        
-        # Find matching keywords in query
-        for keyword, fact_keys in keyword_mapping.items():
-            if keyword in q_lower:
-                for fact_key in fact_keys:
-                    for key, value in facts.items():
-                        if fact_key in key.lower():
-                            return str(value)
         
         return None
 
@@ -171,63 +134,44 @@ class LanguageHandler:
             return malayalam_text
 
 # -------------------------------
-# VOICE-OPTIMIZED AI PROCESSOR
+# AI PROCESSOR
 # -------------------------------
 class AIProcessor:
     def __init__(self, model: str = "sonar"):
         self.model = model
         self.client = pplx_client
     
-    def generate_voice_response(self, user_query: str, kb_entry: Dict[str, Any], lang_mode: str, specific_answer: str = None) -> str:
-        """Generate short, voice-friendly response"""
-        
+    def rewrite_from_kb(self, user_query: str, kb_entry: Dict[str, Any], lang_mode: str) -> str:
         facts = kb_entry.get("answer_facts", {})
+        tags = kb_entry.get("tags", [])
         
-        # If we have a specific answer, use it directly
-        if specific_answer:
-            return self._format_for_voice(user_query, specific_answer, lang_mode)
-        
-        # Build minimal context
         kb_text = "\n".join(f"{key}: {value}" for key, value in facts.items())
         
         if lang_mode == "en":
-            system_prompt = """You are a voice assistant for LBS College. 
-
-CRITICAL RULES:
-1. Answer ONLY the specific question asked
-2. Give ONE short sentence answer (max 20 words)
-3. Do NOT list all information - only what was asked
-4. Speak naturally like a human
-5. No bullet points, numbers, or lists
-6. Response must be perfect for text-to-speech
-
-Examples:
-Q: "What is the phone number?" → "The college phone number is 04994 230 008."
-Q: "Where is the college?" → "LBS College is located in Kasaragod, Kerala."
-Q: "Library timing?" → "The library is open from 9 AM to 5 PM on weekdays."
-"""
+            lang_instruction = "Answer in simple, clear English. Use a friendly, helpful tone suitable for college students."
         else:
-            system_prompt = """You are a Malayalam voice assistant for LBS College.
+            lang_instruction = "Answer in Manglish (Malayalam written in English letters). Use a warm, natural, conversational tone."
+        
+        system_prompt = f"""You are സർവജ്ഞ (Sarva-jña), an AI assistant for LBS College of Engineering, Kasaragod.
 
 CRITICAL RULES:
-1. Answer ONLY the specific question asked
-2. Give ONE short sentence answer (max 20 words)
-3. Use simple Malayalam or Manglish
-4. Speak naturally like talking to a friend
-5. No bullet points or lists
-6. Response must be perfect for text-to-speech
+1. Use ONLY the information provided in KB_FACTS
+2. Do NOT invent new facts or details
+3. Do NOT use internet knowledge
+4. Structure your response naturally, not as a list
+5. {lang_instruction}
 
-Examples:
-Q: "Phone number എന്താണ്?" → "College ന്റെ phone number 04994 230 008 ആണ്."
-Q: "College എവിടെയാണ്?" → "LBS College Kasaragod ൽ ആണ് സ്ഥിതി ചെയ്യുന്നത്."
-"""
+If KB_FACTS don't fully answer the question, acknowledge this politely.
+Keep responses under 300 words for better voice playback."""
         
-        user_message = f"""Question: {user_query}
+        user_message = f"""User Question: {user_query}
 
-Available Information:
+Relevant Tags: {', '.join(tags)}
+
+KB Facts:
 {kb_text}
 
-Give a SHORT, DIRECT answer to ONLY the question asked. One sentence maximum."""
+Please provide a helpful answer based only on the KB facts above."""
         
         try:
             response = self.client.chat.completions.create(
@@ -236,105 +180,54 @@ Give a SHORT, DIRECT answer to ONLY the question asked. One sentence maximum."""
                     {"role": "system", "content": system_prompt},
                     {"role": "user", "content": user_message}
                 ],
-                temperature=0.3,
-                max_tokens=80
+                temperature=0.7,
+                max_tokens=400
             )
             
-            answer = response.choices[0].message.content.strip()
-            return self._clean_for_tts(answer)
+            return response.choices[0].message.content.strip()
             
         except Exception as e:
-            st.error(f"AI Error: {e}")
-            return self._fallback_response(specific_answer or list(facts.values())[0] if facts else "Sorry, I don't have that information.", lang_mode)
-    
-    def _format_for_voice(self, query: str, answer: str, lang_mode: str) -> str:
-        """Format a direct answer for voice output"""
-        q_lower = query.lower()
-        
-        if lang_mode == "en":
-            if "phone" in q_lower or "number" in q_lower:
-                return f"The phone number is {answer}."
-            elif "email" in q_lower:
-                return f"The email address is {answer}."
-            elif "time" in q_lower or "hour" in q_lower:
-                return f"The timing is {answer}."
-            elif "address" in q_lower or "where" in q_lower or "location" in q_lower:
-                return f"The location is {answer}."
-            elif "fee" in q_lower or "cost" in q_lower:
-                return f"The fee is {answer}."
+            st.error(f"AI Processing Error: {e}")
+            
+            if lang_mode == "en":
+                return f"Here's what I know: {' '.join(list(facts.values()))[:200]}"
             else:
-                return f"It is {answer}."
-        else:
-            if "phone" in q_lower or "number" in q_lower or "നമ്പർ" in query:
-                return f"Phone number {answer} ആണ്."
-            elif "email" in q_lower:
-                return f"Email {answer} ആണ്."
-            elif "time" in q_lower or "സമയം" in query:
-                return f"സമയം {answer} ആണ്."
-            elif "എവിടെ" in query or "location" in q_lower:
-                return f"സ്ഥലം {answer} ആണ്."
-            else:
-                return f"{answer}."
-    
-    def _clean_for_tts(self, text: str) -> str:
-        """Clean text for TTS output"""
-        # Remove markdown formatting
-        text = text.replace("**", "").replace("*", "")
-        text = text.replace("#", "").replace("`", "")
-        
-        # Remove bullet points and numbers at start
-        lines = text.split("\n")
-        cleaned_lines = []
-        for line in lines:
-            line = line.strip()
-            if line:
-                # Remove leading bullets/numbers
-                if line.startswith(("-", "•", "●")):
-                    line = line[1:].strip()
-                if len(line) > 2 and line[0].isdigit() and line[1] in ".):":
-                    line = line[2:].strip()
-                cleaned_lines.append(line)
-        
-        text = " ".join(cleaned_lines)
-        
-        # Clean extra spaces
-        while "  " in text:
-            text = text.replace("  ", " ")
-        
-        return text.strip()
-    
-    def _fallback_response(self, answer: str, lang_mode: str) -> str:
-        """Generate fallback response"""
-        if lang_mode == "en":
-            return f"Here's what I found: {answer}"
-        else:
-            return f"ഇതാണ് വിവരം: {answer}"
-    
-    def generate_not_found_response(self, lang_mode: str) -> str:
-        """Generate voice-friendly not found response"""
-        if lang_mode == "en":
-            return "Sorry, I don't have that information. Please ask something else about the college."
-        else:
-            return "ക്ഷമിക്കണം, ആ വിവരം എന്റെ കയ്യിൽ ഇല്ല. കോളേജിനെ കുറിച്ച് മറ്റെന്തെങ്കിലും ചോദിക്കൂ."
+                return f"ഇതാ എനിക്കറിയാവുന്നത്: {' '.join(list(facts.values()))[:200]}"
 
 # -------------------------------
-# SARVAM AI TTS PROCESSOR
+# SARVAM AI AUDIO PROCESSOR WITH AUTO-PLAY
 # -------------------------------
 class AudioProcessor:
     def __init__(self):
         self.client = sarvam_client
-        self.language_codes = {
+        self.supported_languages = {
             "en": "en-IN",
             "ml": "ml-IN",
             "hi": "hi-IN",
             "ta": "ta-IN",
             "te": "te-IN",
             "kn": "kn-IN",
+            "bn": "bn-IN",
+            "gu": "gu-IN",
+            "mr": "mr-IN",
+            "od": "od-IN",
+            "pa": "pa-IN"
+        }
+        self.speakers = {
+            "ml": ["arya", "meera", "pavithra", "maitreyi"],
+            "en": ["arya", "meera", "pavithra", "maitreyi"],
+            "hi": ["arya", "meera", "pavithra", "maitreyi"],
+            "default": ["arya", "meera", "pavithra", "maitreyi"]
         }
         self.audio_cache = {}
     
     def get_pace_value(self, speech_rate: str) -> float:
-        pace_map = {"Slow": 0.85, "Normal": 1.0, "Fast": 1.15}
+        """Convert speech rate setting to pace value for Sarvam AI"""
+        pace_map = {
+            "Slow": 0.8,
+            "Normal": 1.0,
+            "Fast": 1.2
+        }
         return pace_map.get(speech_rate, 1.0)
     
     def text_to_speech(
@@ -344,23 +237,38 @@ class AudioProcessor:
         speaker: str = "arya",
         pitch: float = 0,
         pace: float = 1.0,
-        loudness: float = 1.5,
+        loudness: float = 1.0,
         sample_rate: int = 22050
     ) -> Optional[bytes]:
-        """Convert text to speech using Sarvam AI"""
+        """
+        Convert text to speech using Sarvam AI TTS API
+        
+        Args:
+            text: Text to convert to speech
+            lang_code: Language code (ml, en, hi, etc.)
+            speaker: Voice speaker name
+            pitch: Pitch adjustment (-10 to 10)
+            pace: Speech pace (0.5 to 2.0)
+            loudness: Volume level (0.5 to 2.0)
+            sample_rate: Audio sample rate (8000, 16000, 22050, 24000)
+        
+        Returns:
+            Audio bytes or None if error
+        """
         try:
             if not text or not text.strip():
                 return None
             
-            # Clean text for TTS
-            text = self._prepare_text_for_tts(text)
+            # Map language code to Sarvam AI format
+            target_language = self.supported_languages.get(lang_code, "en-IN")
             
-            target_language = self.language_codes.get(lang_code, "en-IN")
+            # Create cache key
             cache_key = f"{hash(text)}_{target_language}_{speaker}_{pace}"
             
             if cache_key in self.audio_cache:
                 return self.audio_cache[cache_key]
             
+            # Call Sarvam AI TTS API
             response = self.client.text_to_speech.convert(
                 text=text,
                 target_language_code=target_language,
@@ -373,431 +281,674 @@ class AudioProcessor:
                 model="bulbul:v2"
             )
             
-            audio_bytes = self._extract_audio(response)
+            # Handle response - Sarvam AI returns base64 encoded audio
+            audio_bytes = None
+            
+            if hasattr(response, 'audio'):
+                # If response has audio attribute (base64 string)
+                if isinstance(response.audio, str):
+                    audio_bytes = base64.b64decode(response.audio)
+                elif isinstance(response.audio, bytes):
+                    audio_bytes = response.audio
+            elif hasattr(response, 'audios') and response.audios:
+                # If response has audios list
+                audio_data = response.audios[0]
+                if isinstance(audio_data, str):
+                    audio_bytes = base64.b64decode(audio_data)
+                elif isinstance(audio_data, bytes):
+                    audio_bytes = audio_data
+            elif isinstance(response, dict):
+                # If response is a dictionary
+                if 'audio' in response:
+                    audio_bytes = base64.b64decode(response['audio'])
+                elif 'audios' in response and response['audios']:
+                    audio_bytes = base64.b64decode(response['audios'][0])
+            elif isinstance(response, str):
+                # If response is directly a base64 string
+                audio_bytes = base64.b64decode(response)
+            elif isinstance(response, bytes):
+                # If response is directly bytes
+                audio_bytes = response
             
             if audio_bytes:
                 self.audio_cache[cache_key] = audio_bytes
-            
-            return audio_bytes
+                return audio_bytes
+            else:
+                st.warning("Could not extract audio from Sarvam AI response")
+                return None
             
         except Exception as e:
-            st.error(f"TTS Error: {e}")
+            st.error(f"Sarvam AI TTS Error: {e}")
             return None
     
-    def _prepare_text_for_tts(self, text: str) -> str:
-        """Prepare text for optimal TTS output"""
-        # Remove special characters that don't speak well
-        text = text.replace("@", " at ")
-        text = text.replace("&", " and ")
-        text = text.replace("%", " percent ")
-        text = text.replace("+", " plus ")
-        text = text.replace("=", " equals ")
-        
-        # Add pauses with commas
-        text = text.replace(" - ", ", ")
-        
-        # Clean multiple spaces
-        while "  " in text:
-            text = text.replace("  ", " ")
-        
-        return text.strip()
-    
-    def _extract_audio(self, response) -> Optional[bytes]:
-        """Extract audio bytes from Sarvam AI response"""
-        try:
-            if hasattr(response, 'audios') and response.audios:
-                audio_data = response.audios[0]
-                if isinstance(audio_data, str):
-                    return base64.b64decode(audio_data)
-                return audio_data
-            elif hasattr(response, 'audio'):
-                if isinstance(response.audio, str):
-                    return base64.b64decode(response.audio)
-                return response.audio
-            elif isinstance(response, dict):
-                if 'audios' in response and response['audios']:
-                    return base64.b64decode(response['audios'][0])
-                if 'audio' in response:
-                    return base64.b64decode(response['audio'])
-            elif isinstance(response, str):
-                return base64.b64decode(response)
-            elif isinstance(response, bytes):
-                return response
-        except Exception as e:
-            st.error(f"Audio extraction error: {e}")
-        return None
-    
-    def create_autoplay_html(self, audio_bytes: bytes) -> str:
-        """Create HTML for audio autoplay"""
+    def create_audio_autoplay_html(self, audio_bytes: bytes, autoplay: bool = True) -> str:
+        """Create HTML audio element with autoplay support"""
         audio_b64 = base64.b64encode(audio_bytes).decode()
-        return f"""
-        <audio id="voiceResponse" autoplay controls style="width:100%; margin-top:10px;">
+        
+        autoplay_attr = "autoplay" if autoplay else ""
+        html = f"""
+        <audio id="autoPlayAudio" controls {autoplay_attr} style="width: 100%; margin-top: 10px;">
             <source src="data:audio/wav;base64,{audio_b64}" type="audio/wav">
+            <source src="data:audio/mp3;base64,{audio_b64}" type="audio/mp3">
+            Your browser does not support the audio element.
         </audio>
+        
         <script>
-        (function() {{
-            var audio = document.getElementById('voiceResponse');
-            if(audio) {{
-                audio.play().catch(function(e) {{
-                    console.log('Autoplay blocked:', e);
-                }});
+        document.addEventListener('DOMContentLoaded', function() {{
+            const audio = document.getElementById('autoPlayAudio');
+            if (audio) {{
+                const playPromise = audio.play();
+                if (playPromise !== undefined) {{
+                    playPromise.then(_ => {{
+                        console.log('Audio autoplay started successfully');
+                    }}).catch(error => {{
+                        console.log('Autoplay prevented:', error);
+                        audio.controls = true;
+                    }});
+                }}
             }}
-        }})();
+        }});
         </script>
         """
+        return html
+    
+    def get_available_speakers(self, lang_code: str = "ml") -> list:
+        """Get available speakers for a language"""
+        return self.speakers.get(lang_code, self.speakers["default"])
 
 # -------------------------------
-# SESSION STATE
+# SESSION STATE MANAGEMENT
 # -------------------------------
-def init_session():
-    defaults = {
-        "messages": [],
-        "preferences": {
+def initialize_session_state():
+    if "messages" not in st.session_state:
+        st.session_state.messages = []
+    
+    if "user_preferences" not in st.session_state:
+        st.session_state.user_preferences = {
+            "language": "auto",
             "voice_enabled": True,
-            "auto_play": True,
             "tts_language": "ml",
-            "speaker": "arya",
+            "auto_play": True,
             "speech_rate": "Normal",
+            "speaker": "arya",
             "pitch": 0,
-            "loudness": 1.5
-        },
-        "kb": None,
-        "lh": None,
-        "ai": None,
-        "ap": None,
-        "last_audio": None,
-        "autoplay_pending": False
-    }
+            "loudness": 1.0
+        }
     
-    for key, value in defaults.items():
-        if key not in st.session_state:
-            st.session_state[key] = value
-    
-    if st.session_state.kb is None:
+    if "knowledge_base" not in st.session_state:
         st.session_state.kb = KnowledgeBase("faq_data.json")
-    if st.session_state.lh is None:
+    
+    if "language_handler" not in st.session_state:
         st.session_state.lh = LanguageHandler()
-    if st.session_state.ai is None:
+    
+    if "ai_processor" not in st.session_state:
         st.session_state.ai = AIProcessor()
-    if st.session_state.ap is None:
+    
+    if "audio_processor" not in st.session_state:
         st.session_state.ap = AudioProcessor()
+    
+    if "last_audio_data" not in st.session_state:
+        st.session_state.last_audio_data = None
+    
+    if "should_autoplay" not in st.session_state:
+        st.session_state.should_autoplay = False
 
 # -------------------------------
-# PAGE CONFIG
+# STREAMLIT APP CONFIGURATION
 # -------------------------------
+
 st.set_page_config(
-    page_title="സർവജ്ഞ – Voice Assistant",
-    page_icon="🎤",
-    layout="wide"
+    page_title="സർവജ്ഞ – LBS College AI Voice Assistant",
+    page_icon="🎓",
+    layout="wide",
+    initial_sidebar_state="expanded"
 )
 
 st.markdown("""
 <style>
-.header {
-    background: linear-gradient(135deg, #1a5276 0%, #2e86ab 100%);
+.main-header {
+    background: linear-gradient(135deg, #2E86AB 0%, #1B4F72 100%);
     color: white;
-    padding: 25px;
+    text-align: center;
+    padding: 30px;
     border-radius: 15px;
-    text-align: center;
-    margin-bottom: 25px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
-.user-msg {
-    background: #e8f5e9;
-    padding: 15px;
-    border-radius: 10px;
-    border-left: 4px solid #4caf50;
-    margin: 10px 0;
-}
-.bot-msg {
-    background: #e3f2fd;
-    padding: 15px;
-    border-radius: 10px;
-    border-left: 4px solid #2196f3;
-    margin: 10px 0;
-}
-.voice-box {
-    background: #fff3e0;
-    padding: 20px;
-    border-radius: 10px;
-    border: 2px dashed #ff9800;
-    text-align: center;
+.user-message {
+    background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%);
+    padding: 18px;
+    border-radius: 12px;
+    border-left: 5px solid #4CAF50;
     margin: 15px 0;
 }
-.quick-btn {
-    margin: 3px 0;
+.assistant-message {
+    background: linear-gradient(135deg, #F0F7FF 0%, #D4E6FF 100%);
+    padding: 18px;
+    border-radius: 12px;
+    border-left: 5px solid #2E86AB;
+    margin: 15px 0;
+}
+.voice-input-section {
+    background: linear-gradient(135deg, #F8F9FA 0%, #E9ECEF 100%);
+    padding: 25px;
+    border-radius: 12px;
+    border: 3px dashed #2E86AB;
+    margin: 20px 0;
+    text-align: center;
+}
+.autoplay-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 10px;
+    background: #FFD700;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    color: #333;
+    margin-left: 10px;
+}
+.sarvam-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 12px;
+    background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+    border-radius: 15px;
+    font-size: 0.75rem;
+    color: white;
+    margin-left: 10px;
 }
 </style>
 """, unsafe_allow_html=True)
 
-init_session()
+initialize_session_state()
 
 # -------------------------------
-# CORE FUNCTIONS
+# HELPER FUNCTIONS
 # -------------------------------
-def process_query(query: str, is_voice: bool = False):
-    """Process user query and generate voice response"""
+def add_message(role: str, content: str, is_voice: bool = False, audio_bytes: bytes = None):
+    timestamp = datetime.now().strftime("%H:%M:%S")
     
-    # Detect language
-    lang_mode = st.session_state.lh.detect_language_mode(query)
+    message = {
+        "role": role,
+        "content": content,
+        "timestamp": timestamp,
+        "is_voice": is_voice,
+        "audio_bytes": audio_bytes,
+        "is_latest": True
+    }
     
-    # Convert Malayalam script to Manglish for processing
-    if lang_mode == "ml_script":
-        processed_query = st.session_state.lh.malayalam_to_manglish(query)
-    else:
-        processed_query = query
+    for msg in st.session_state.messages:
+        msg["is_latest"] = False
     
-    # Search knowledge base
-    kb_entry = st.session_state.kb.get_relevant_info(processed_query)
+    st.session_state.messages.append(message)
     
-    if kb_entry:
-        # Try to get specific answer first
-        specific_answer = st.session_state.kb.extract_specific_answer(processed_query, kb_entry)
+    if role == "assistant" and audio_bytes and st.session_state.user_preferences["auto_play"]:
+        st.session_state.should_autoplay = True
+        st.session_state.last_audio_data = audio_bytes
+
+def process_query(query: str, is_voice_input: bool = False):
+    with st.spinner("Processing your question..."):
+        lang_mode = st.session_state.lh.detect_language_mode(query)
         
-        # Generate voice-optimized response
-        response = st.session_state.ai.generate_voice_response(
-            processed_query, 
-            kb_entry, 
-            lang_mode,
-            specific_answer
-        )
-    else:
-        response = st.session_state.ai.generate_not_found_response(lang_mode)
-    
-    # Generate audio
-    audio_bytes = None
-    if st.session_state.preferences["voice_enabled"]:
-        prefs = st.session_state.preferences
-        audio_bytes = st.session_state.ap.text_to_speech(
-            text=response,
-            lang_code=prefs["tts_language"],
-            speaker=prefs["speaker"],
-            pitch=prefs["pitch"],
-            pace=st.session_state.ap.get_pace_value(prefs["speech_rate"]),
-            loudness=prefs["loudness"]
-        )
-    
-    # Save messages
-    timestamp = datetime.now().strftime("%H:%M")
-    
-    st.session_state.messages.append({
-        "role": "user",
-        "content": query,
-        "time": timestamp,
-        "is_voice": is_voice
-    })
-    
-    st.session_state.messages.append({
-        "role": "assistant",
-        "content": response,
-        "time": timestamp,
-        "audio": audio_bytes
-    })
-    
-    if audio_bytes and st.session_state.preferences["auto_play"]:
-        st.session_state.last_audio = audio_bytes
-        st.session_state.autoplay_pending = True
-
-def clear_chat():
-    st.session_state.messages = []
-    st.session_state.last_audio = None
-    st.session_state.autoplay_pending = False
-
-# -------------------------------
-# SIDEBAR
-# -------------------------------
-with st.sidebar:
-    st.markdown("## 🎤 സർവജ്ഞ")
-    st.caption("LBS College Voice Assistant")
-    
-    st.divider()
-    
-    st.markdown("### 🔊 Voice Settings")
-    
-    st.session_state.preferences["auto_play"] = st.checkbox(
-        "Auto-play responses",
-        value=st.session_state.preferences["auto_play"]
-    )
-    
-    st.session_state.preferences["voice_enabled"] = st.checkbox(
-        "Enable voice",
-        value=st.session_state.preferences["voice_enabled"]
-    )
-    
-    if st.session_state.preferences["voice_enabled"]:
-        lang = st.radio(
-            "Language",
-            ["Malayalam", "English"],
-            index=0 if st.session_state.preferences["tts_language"] == "ml" else 1
-        )
-        st.session_state.preferences["tts_language"] = "ml" if lang == "Malayalam" else "en"
+        if lang_mode == "ml_script":
+            processed_query = st.session_state.lh.malayalam_to_manglish(query)
+            if is_voice_input:
+                st.success(f"🎤 Voice recognized and converted: {processed_query}")
+        else:
+            processed_query = query
         
-        st.session_state.preferences["speaker"] = st.selectbox(
-            "Voice",
-            ["arya", "meera", "pavithra", "maitreyi"],
-            index=["arya", "meera", "pavithra", "maitreyi"].index(
-                st.session_state.preferences["speaker"]
+        kb_entry = st.session_state.kb.get_relevant_info(processed_query)
+        
+        if kb_entry:
+            response = st.session_state.ai.rewrite_from_kb(processed_query, kb_entry, lang_mode)
+        else:
+            if lang_mode == "en":
+                response = "Sorry, I couldn't find that information in the college database."
+            else:
+                response = "ക്ഷമിക്കണം, ഈ ചോദ്യത്തിനുള്ള വിവരങ്ങൾ കോളേജ് ഡാറ്റാബേസിൽ ഇല്ല."
+        
+        audio_bytes = None
+        if st.session_state.user_preferences["voice_enabled"]:
+            tts_lang = st.session_state.user_preferences["tts_language"]
+            speaker = st.session_state.user_preferences.get("speaker", "arya")
+            pitch = st.session_state.user_preferences.get("pitch", 0)
+            loudness = st.session_state.user_preferences.get("loudness", 1.0)
+            pace = st.session_state.ap.get_pace_value(
+                st.session_state.user_preferences.get("speech_rate", "Normal")
             )
-        )
+            
+            audio_bytes = st.session_state.ap.text_to_speech(
+                text=response, 
+                lang_code=tts_lang,
+                speaker=speaker,
+                pitch=pitch,
+                pace=pace,
+                loudness=loudness
+            )
         
-        st.session_state.preferences["speech_rate"] = st.select_slider(
-            "Speed",
-            ["Slow", "Normal", "Fast"],
-            value=st.session_state.preferences["speech_rate"]
+        add_message("user", query, is_voice=is_voice_input)
+        add_message("assistant", response, audio_bytes=audio_bytes)
+
+def clear_conversation():
+    st.session_state.messages = []
+    st.session_state.last_audio_data = None
+    st.session_state.should_autoplay = False
+    st.success("Conversation cleared!")
+
+def create_autoplay_audio():
+    if (st.session_state.should_autoplay and 
+        st.session_state.last_audio_data and 
+        st.session_state.user_preferences["auto_play"]):
+        
+        st.session_state.should_autoplay = False
+        
+        html = st.session_state.ap.create_audio_autoplay_html(
+            st.session_state.last_audio_data,
+            autoplay=True
         )
-    
-    st.divider()
-    
-    if st.button("🗑️ Clear Chat", use_container_width=True):
-        clear_chat()
-        st.rerun()
-    
-    if st.button("🔊 Test Voice", use_container_width=True):
-        test = "നമസ്കാരം, ഞാൻ സർവജ്ഞ" if st.session_state.preferences["tts_language"] == "ml" else "Hello, I am Sarvajna"
-        audio = st.session_state.ap.text_to_speech(
-            test,
-            st.session_state.preferences["tts_language"],
-            st.session_state.preferences["speaker"]
-        )
-        if audio:
-            st.audio(audio, format="audio/wav")
+        st.markdown(html, unsafe_allow_html=True)
+        st.markdown('<span class="autoplay-indicator">🔊 Auto-playing</span>', unsafe_allow_html=True)
 
 # -------------------------------
-# MAIN CONTENT
+# SIDEBAR COMPONENT
 # -------------------------------
-st.markdown("""
-<div class="header">
-    <h1>🎤 സർവജ്ഞ</h1>
-    <p>LBS College Voice Assistant | Ask in Malayalam or English</p>
-</div>
-""", unsafe_allow_html=True)
-
-# Status bar
-col1, col2, col3 = st.columns(3)
-with col1:
-    status = "🟢" if st.session_state.preferences["voice_enabled"] else "🔴"
-    st.markdown(f"**Voice:** {status}")
-with col2:
-    lang = "മലയാളം" if st.session_state.preferences["tts_language"] == "ml" else "English"
-    st.markdown(f"**Language:** {lang}")
-with col3:
-    st.markdown(f"**Speaker:** {st.session_state.preferences['speaker'].title()}")
-
-st.divider()
-
-# Main layout
-main_col, side_col = st.columns([3, 1])
-
-with main_col:
-    # Input tabs
-    tab1, tab2 = st.tabs(["💬 Type", "🎤 Speak"])
-    
-    with tab1:
-        user_input = st.text_input(
-            "Ask your question:",
-            placeholder="e.g., What is the college phone number?",
-            key="text_input"
-        )
-        
-        if st.button("📤 Ask", type="primary", use_container_width=True):
-            if user_input.strip():
-                process_query(user_input.strip())
-                st.rerun()
-    
-    with tab2:
+def create_sidebar():
+    with st.sidebar:
         st.markdown("""
-        <div class="voice-box">
-            <h4>🎙️ Speak in Malayalam</h4>
-            <p>Click to record your question</p>
+        <div style="text-align: center; padding: 20px 0;">
+            <h2 style="color: #2E86AB;">🎓 സർവജ്ഞ</h2>
+            <p style="color: #666; font-size: 0.9rem;">LBS College AI Assistant</p>
+            <span class="sarvam-badge">Powered by Sarvam AI</span>
         </div>
         """, unsafe_allow_html=True)
         
-        voice_text = speech_to_text(
-            language='ml-IN',
-            start_prompt="🎙️ Record",
-            stop_prompt="⏹️ Stop",
-            just_once=True,
-            use_container_width=True,
-            key="voice_input"
+        st.divider()
+        
+        st.markdown("### ⚙️ Voice Settings (Sarvam AI)")
+        
+        auto_play = st.checkbox(
+            "Auto-play voice responses 🔊",
+            value=st.session_state.user_preferences.get("auto_play", True),
+            help="Automatically play voice responses"
+        )
+        st.session_state.user_preferences["auto_play"] = auto_play
+        
+        voice_enabled = st.checkbox(
+            "Enable voice responses",
+            value=st.session_state.user_preferences.get("voice_enabled", True),
+            help="Enable Sarvam AI text-to-speech"
+        )
+        st.session_state.user_preferences["voice_enabled"] = voice_enabled
+        
+        if voice_enabled:
+            tts_lang = st.radio(
+                "Response language",
+                ["Malayalam", "English", "Hindi", "Tamil", "Telugu", "Kannada"],
+                index=0 if st.session_state.user_preferences.get("tts_language") == "ml" else 1
+            )
+            lang_map = {
+                "Malayalam": "ml",
+                "English": "en",
+                "Hindi": "hi",
+                "Tamil": "ta",
+                "Telugu": "te",
+                "Kannada": "kn"
+            }
+            st.session_state.user_preferences["tts_language"] = lang_map.get(tts_lang, "ml")
+            
+            st.markdown("#### 🎙️ Voice Selection")
+            speaker = st.selectbox(
+                "Speaker voice",
+                ["arya", "meera", "pavithra", "maitreyi"],
+                index=["arya", "meera", "pavithra", "maitreyi"].index(
+                    st.session_state.user_preferences.get("speaker", "arya")
+                ),
+                help="Select the voice for speech synthesis"
+            )
+            st.session_state.user_preferences["speaker"] = speaker
+            
+            speech_rate_options = ["Slow", "Normal", "Fast"]
+            current_speech_rate = st.session_state.user_preferences.get("speech_rate", "Normal")
+            
+            if current_speech_rate not in speech_rate_options:
+                current_speech_rate = "Normal"
+            
+            speech_rate = st.select_slider(
+                "Speech speed",
+                options=speech_rate_options,
+                value=current_speech_rate
+            )
+            st.session_state.user_preferences["speech_rate"] = speech_rate
+            
+            st.markdown("#### 🎚️ Advanced Voice Settings")
+            
+            pitch = st.slider(
+                "Pitch adjustment",
+                min_value=-10.0,
+                max_value=10.0,
+                value=float(st.session_state.user_preferences.get("pitch", 0)),
+                step=0.5,
+                help="Adjust the pitch of the voice"
+            )
+            st.session_state.user_preferences["pitch"] = pitch
+            
+            loudness = st.slider(
+                "Loudness",
+                min_value=0.5,
+                max_value=2.0,
+                value=float(st.session_state.user_preferences.get("loudness", 1.0)),
+                step=0.1,
+                help="Adjust the volume level"
+            )
+            st.session_state.user_preferences["loudness"] = loudness
+        
+        st.divider()
+        
+        st.markdown("### 🌐 Language")
+        language_option = st.selectbox(
+            "Input language preference",
+            ["Auto-detect", "English", "Malayalam", "Manglish"],
+            index=0
         )
         
-        if voice_text:
-            st.info(f"🎤 Heard: {voice_text}")
-            process_query(voice_text, is_voice=True)
-            st.rerun()
+        language_map = {
+            "Auto-detect": "auto",
+            "English": "en",
+            "Malayalam": "ml",
+            "Manglish": "manglish"
+        }
+        st.session_state.user_preferences["language"] = language_map[language_option]
+        
+        st.divider()
+        
+        st.markdown("### 💬 Conversation")
+        
+        col1, col2 = st.columns(2)
+        with col1:
+            if st.button("🗑️ Clear Chat", use_container_width=True):
+                clear_conversation()
+                st.rerun()
+        
+        with col2:
+            if st.button("🔊 Test Voice", use_container_width=True):
+                test_text = "Hello! This is a test of the Sarvam AI voice assistant."
+                if st.session_state.user_preferences["tts_language"] == "ml":
+                    test_text = "നമസ്കാരം! ഇത് സർവം എഐ വോയ്സ് അസിസ്റ്റന്റിന്റെ ഒരു പരീക്ഷണമാണ്."
+                
+                audio_bytes = st.session_state.ap.text_to_speech(
+                    text=test_text, 
+                    lang_code=st.session_state.user_preferences["tts_language"],
+                    speaker=st.session_state.user_preferences.get("speaker", "arya"),
+                    pitch=st.session_state.user_preferences.get("pitch", 0),
+                    pace=st.session_state.ap.get_pace_value(
+                        st.session_state.user_preferences.get("speech_rate", "Normal")
+                    ),
+                    loudness=st.session_state.user_preferences.get("loudness", 1.0)
+                )
+                if audio_bytes:
+                    st.audio(audio_bytes, format="audio/wav")
+                else:
+                    st.warning("Could not generate audio. Please check your Sarvam AI API key.")
+
+# -------------------------------
+# MAIN APP LAYOUT
+# -------------------------------
+def main():
+    create_sidebar()
+    
+    st.markdown("""
+    <div class="main-header">
+        <h1>🎓 സർവജ്ഞ – LBS College AI Voice Assistant</h1>
+        <p>Your Voice, Our Knowledge, Instant Answers in Malayalam & English</p>
+        <p style="font-size: 1rem; background: rgba(255,255,255,0.2); padding: 8px; border-radius: 20px; display: inline-block;">
+            🔊 Powered by <strong>Sarvam AI</strong> – Natural Indian Language TTS
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    col1, col2, col3, col4, col5 = st.columns(5)
+    with col1:
+        auto_play_status = "🟢 ON" if st.session_state.user_preferences["auto_play"] else "🔴 OFF"
+        st.markdown(f"**Auto-play:** {auto_play_status}")
+    
+    with col2:
+        voice_status = "🟢 ON" if st.session_state.user_preferences["voice_enabled"] else "🔴 OFF"
+        st.markdown(f"**Voice:** {voice_status}")
+    
+    with col3:
+        lang_name = {
+            "ml": "Malayalam",
+            "en": "English",
+            "hi": "Hindi",
+            "ta": "Tamil",
+            "te": "Telugu",
+            "kn": "Kannada"
+        }.get(st.session_state.user_preferences["tts_language"], "Malayalam")
+        st.markdown(f"**Voice Lang:** {lang_name}")
+    
+    with col4:
+        speaker = st.session_state.user_preferences.get("speaker", "arya").title()
+        st.markdown(f"**Speaker:** {speaker}")
+    
+    with col5:
+        kb_status = "🟢 Loaded" if st.session_state.kb.faqs else "🔴 Empty"
+        st.markdown(f"**Knowledge:** {kb_status}")
     
     st.divider()
     
-    # Conversation
-    st.markdown("### 💬 Conversation")
+    col_main, col_sidebar = st.columns([3, 1])
     
-    if not st.session_state.messages:
-        st.info("👋 Ask me anything about LBS College!")
-    
-    for i, msg in enumerate(st.session_state.messages):
-        if msg["role"] == "user":
-            icon = "🎤" if msg.get("is_voice") else "💬"
-            st.markdown(f"""
-            <div class="user-msg">
-                <strong>You {icon}</strong> <small>({msg['time']})</small><br>
-                {msg['content']}
-            </div>
-            """, unsafe_allow_html=True)
-        else:
-            st.markdown(f"""
-            <div class="bot-msg">
-                <strong>🤖 സർവജ്ഞ</strong> <small>({msg['time']})</small><br>
-                {msg['content']}
+    with col_main:
+        tab1, tab2 = st.tabs(["💬 Text Input", "🎤 Voice Input"])
+        
+        with tab1:
+            user_input = st.text_area(
+                "Type your question:",
+                placeholder="Example: What engineering courses are available?",
+                height=100,
+                key="text_input"
+            )
+            
+            col_btn1, col_btn2 = st.columns([1, 3])
+            with col_btn1:
+                if st.button("📤 Submit & Speak", type="primary", use_container_width=True):
+                    if user_input.strip():
+                        process_query(user_input.strip())
+                        st.rerun()
+                    else:
+                        st.warning("Please enter a question first!")
+            
+            with col_btn2:
+                if st.button("🗑️ Clear Input", use_container_width=True):
+                    st.session_state.text_input = ""
+                    st.rerun()
+        
+        with tab2:
+            st.markdown("""
+            <div class="voice-input-section">
+                <h3>🎤 Speak Your Question</h3>
+                <p>Click below to record in Malayalam. The response will play automatically with Sarvam AI voice.</p>
             </div>
             """, unsafe_allow_html=True)
             
-            if msg.get("audio"):
-                st.audio(msg["audio"], format="audio/wav")
+            voice_text = speech_to_text(
+                language='ml-IN',
+                start_prompt="🎙️ Start Recording",
+                stop_prompt="⏹️ Stop",
+                just_once=True,
+                use_container_width=True,
+                key="voice_recorder"
+            )
+            
+            if voice_text:
+                st.success("🎤 Voice input received!")
+                st.info(f"**Recognized Text:** {voice_text}")
+                process_query(voice_text, is_voice_input=True)
+                st.rerun()
+        
+        st.divider()
+        
+        st.markdown("### 💭 Conversation")
+        
+        if not st.session_state.messages:
+            st.info("👋 **Welcome to സർവജ്ഞ with Sarvam AI Voice!**\n\nAsk questions about LBS College in English, Malayalam, or Manglish.")
+        
+        for i, message in enumerate(st.session_state.messages):
+            if message["role"] == "user":
+                voice_icon = "🎤" if message.get('is_voice') else "💬"
+                st.markdown(f"""
+                <div class="user-message">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <strong>👤 You {voice_icon}</strong>
+                        <small style="color: #666;">{message['timestamp']}</small>
+                    </div>
+                    <p style="margin-top: 10px;">{message['content']}</p>
+                </div>
+                """, unsafe_allow_html=True)
+            else:
+                autoplay_indicator = ""
+                if message.get('is_latest') and st.session_state.user_preferences['auto_play']:
+                    autoplay_indicator = '<span class="autoplay-indicator">🔊 Auto-play</span>'
+                
+                sarvam_badge = '<span class="sarvam-badge">Sarvam AI</span>'
+                
+                st.markdown(f"""
+                <div class="assistant-message">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <strong>🤖 സർവജ്ഞ</strong>
+                            {sarvam_badge}
+                            {autoplay_indicator}
+                        </div>
+                        <small style="color: #666;">{message['timestamp']}</small>
+                    </div>
+                    <p style="margin-top: 10px;">{message['content']}</p>
+                </div>
+                """, unsafe_allow_html=True)
+                
+                if (message.get('audio_bytes') and 
+                    st.session_state.user_preferences["voice_enabled"]):
+                    
+                    st.audio(message['audio_bytes'], format="audio/wav")
+                    
+                    col_play, col_info = st.columns([1, 3])
+                    with col_play:
+                        if st.button(f"🔊 Play Again", key=f"play_{i}"):
+                            st.session_state.should_autoplay = True
+                            st.session_state.last_audio_data = message['audio_bytes']
+                            st.rerun()
+                    
+                    with col_info:
+                        lang_name = {
+                            "ml": "Malayalam",
+                            "en": "English",
+                            "hi": "Hindi",
+                            "ta": "Tamil",
+                            "te": "Telugu",
+                            "kn": "Kannada"
+                        }.get(st.session_state.user_preferences["tts_language"], "Malayalam")
+                        speaker = st.session_state.user_preferences.get("speaker", "arya").title()
+                        speed = st.session_state.user_preferences['speech_rate']
+                        st.caption(f"Voice: {lang_name} | Speaker: {speaker} | Speed: {speed}")
+        
+        if st.session_state.messages and st.session_state.messages[-1]["role"] == "assistant":
+            create_autoplay_audio()
     
-    # Autoplay latest audio
-    if st.session_state.autoplay_pending and st.session_state.last_audio:
-        st.session_state.autoplay_pending = False
-        html = st.session_state.ap.create_autoplay_html(st.session_state.last_audio)
-        st.markdown(html, unsafe_allow_html=True)
-
-with side_col:
-    st.markdown("### ⚡ Quick Ask")
+    with col_sidebar:
+        st.markdown("### ⚡ Quick Questions")
+        
+        quick_questions = [
+            ("What engineering courses?", "courses"),
+            ("Contact information?", "contact"),
+            ("Library hours?", "library"),
+            ("Admission process?", "admission"),
+            ("Hostel facilities?", "hostel"),
+            ("Placement details?", "placement"),
+            ("College location?", "location"),
+            ("എന്ത് കോഴ്സുകൾ?", "courses_ml"),
+            ("ഫോൺ നമ്പർ?", "phone_ml"),
+            ("ലൈബ്രറി സമയം?", "library_ml")
+        ]
+        
+        for question_text, key in quick_questions:
+            if st.button(question_text, key=f"quick_{key}", use_container_width=True):
+                process_query(question_text)
+                st.rerun()
+        
+        st.divider()
+        
+        st.markdown("### 🔊 Sarvam AI Voice Test")
+        test_text = st.text_input("Test text:", "ഇത് ഒരു പരീക്ഷണമാണ്")
+        
+        col_test1, col_test2 = st.columns(2)
+        with col_test1:
+            if st.button("🇬🇧 English", use_container_width=True):
+                audio_bytes = st.session_state.ap.text_to_speech(
+                    text="This is a voice test using Sarvam AI.", 
+                    lang_code="en",
+                    speaker=st.session_state.user_preferences.get("speaker", "arya")
+                )
+                if audio_bytes:
+                    st.audio(audio_bytes, format="audio/wav")
+        
+        with col_test2:
+            if st.button("🇮🇳 Malayalam", use_container_width=True):
+                audio_bytes = st.session_state.ap.text_to_speech(
+                    text=test_text if test_text else "നമസ്കാരം, ഇത് സർവം എഐ വോയ്സ് ടെസ്റ്റ് ആണ്.", 
+                    lang_code="ml",
+                    speaker=st.session_state.user_preferences.get("speaker", "arya")
+                )
+                if audio_bytes:
+                    st.audio(audio_bytes, format="audio/wav")
+        
+        st.divider()
+        
+        st.markdown("### 🎭 Voice Samples")
+        st.caption("Try different Sarvam AI voices")
+        
+        for speaker_name in ["arya", "meera", "pavithra", "maitreyi"]:
+            if st.button(f"🎙️ {speaker_name.title()}", key=f"sample_{speaker_name}", use_container_width=True):
+                sample_text = "നമസ്കാരം, ഞാൻ സർവജ്ഞ ആണ്."
+                audio_bytes = st.session_state.ap.text_to_speech(
+                    text=sample_text,
+                    lang_code="ml",
+                    speaker=speaker_name
+                )
+                if audio_bytes:
+                    st.audio(audio_bytes, format="audio/wav")
     
-    quick_questions = [
-        ("📞 Phone number?", "What is the phone number?"),
-        ("📍 Location?", "Where is the college located?"),
-        ("📧 Email?", "What is the email address?"),
-        ("🕐 Library timing?", "What is the library timing?"),
-        ("📚 Courses?", "What courses are available?"),
-        ("🏠 Hostel info?", "Tell me about hostel facilities"),
-        ("💼 Placements?", "What about placements?"),
-        ("📝 Admission?", "How to apply for admission?"),
-    ]
-    
-    for label, question in quick_questions:
-        if st.button(label, key=f"q_{label}", use_container_width=True):
-            process_query(question)
-            st.rerun()
+    st.markdown("""
+    <script>
+    function handleAudioAutoplay() {
+        const audioElements = document.querySelectorAll('audio');
+        audioElements.forEach(audio => {
+            if (audio.id === 'autoPlayAudio') {
+                const playPromise = audio.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(error => {
+                        console.log('Autoplay was prevented:', error);
+                        audio.controls = true;
+                    });
+                }
+            }
+        });
+    }
+    document.addEventListener('DOMContentLoaded', handleAudioAutoplay);
+    const observer = new MutationObserver(handleAudioAutoplay);
+    observer.observe(document.body, { childList: true, subtree: true });
+    </script>
+    """, unsafe_allow_html=True)
     
     st.divider()
-    
-    st.markdown("### 🗣️ Malayalam")
-    
-    ml_questions = [
-        ("ഫോൺ നമ്പർ?", "ഫോൺ നമ്പർ എന്താണ്?"),
-        ("എവിടെയാണ്?", "കോളേജ് എവിടെയാണ്?"),
-        ("സമയം?", "ലൈബ്രറി സമയം എന്താണ്?"),
-    ]
-    
-    for label, question in ml_questions:
-        if st.button(label, key=f"ml_{label}", use_container_width=True):
-            process_query(question)
-            st.rerun()
+    st.markdown("""
+    <div style="text-align: center; color: #666; font-size: 0.9em; padding: 20px;">
+        <p>🎓 <strong>സർവജ്ഞ – LBS College of Engineering, Kasaragod</strong></p>
+        <p>🔊 <strong>Voice Assistant Powered by Sarvam AI (Bulbul v2)</strong></p>
+        <p style="font-size: 0.8em; color: #999;">Natural Indian Language Text-to-Speech</p>
+    </div>
+    """, unsafe_allow_html=True)
 
-# Footer
-st.divider()
-st.markdown("""
-<div style="text-align:center; color:#666; padding:15px;">
-    <p>🎓 <strong>LBS College of Engineering, Kasaragod</strong></p>
-    <p>🔊 Powered by <strong>Sarvam AI</strong></p>
-</div>
-""", unsafe_allow_html=True)
+if __name__ == "__main__":
+    main()
