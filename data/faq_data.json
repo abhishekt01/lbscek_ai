@@ -535,5 +535,134 @@
       "Qualifications": "Ph.D. from NIT Surathkal",
       "Role": "Head of the Institution"
     }
+  },
+
+{
+  "id": 27,
+  "question_patterns": [
+    "how are you",
+    "how are you doing",
+    "are you okay",
+    "sugham ano",
+    "സുഖമാണോ",
+    "എന്തുണ്ട് വിശേഷം"
+  ],
+  "tags": ["smalltalk", "human", "interaction"],
+  "answer_facts": {
+    "Response": [
+      "I’m doing great! 😊 How can I assist you?",
+      "All good here 👍 What would you like to know?",
+      "സുഖമാണ് 😊 നിങ്ങളെ എങ്ങനെ സഹായിക്കാം?",
+      "എല്ലാം നന്നായി നടക്കുന്നു. എന്താണ് അറിയേണ്ടത്?"
+    ]
   }
+}
+,
+{
+  "id": 28,
+  "question_patterns": [
+    "thank you",
+    "thanks",
+    "thanks a lot",
+    "thank u",
+    "നന്ദി",
+    "വളരെ നന്ദി"
+  ],
+  "tags": ["thanks", "gratitude", "polite"],
+  "answer_facts": {
+    "Response": [
+      "You’re welcome! 😊",
+      "Happy to help 👍",
+      "എന്തെങ്കിലും വേണമെങ്കിൽ വീണ്ടും ചോദിക്കൂ 😊",
+      "സഹായിക്കാൻ കഴിഞ്ഞത് സന്തോഷം!"
+    ]
+  }
+}
+,
+{
+  "id": 29,
+  "question_patterns": [
+    "bye",
+    "goodbye",
+    "see you",
+    "exit",
+    "close",
+    "വിട",
+    "പിന്നെ കാണാം"
+  ],
+  "tags": ["bye", "exit", "end"],
+  "answer_facts": {
+    "Response": [
+      "Goodbye! 👋 Have a great day.",
+      "See you again 😊",
+      "വിട! നല്ലൊരു ദിവസം ആശംസിക്കുന്നു 👋",
+      "പിന്നെ കാണാം 😊"
+    ]
+  }
+}
+,
+{
+  "id": 30,
+  "question_patterns": [
+    "help",
+    "what can you do",
+    "how can you help me",
+    "options",
+    "സഹായം",
+    "നിനക്ക് എന്ത് ചെയ്യാൻ കഴിയും"
+  ],
+  "tags": ["help", "guide", "support"],
+  "answer_facts": {
+    "Response": [
+      "I can help you with admissions, courses, fees, hostel, placements, facilities, and more.",
+      "Ask me anything about LBS College of Engineering.",
+      "അഡ്മിഷൻ, കോഴ്സുകൾ, ഫീസ്, ഹോസ്റ്റൽ, പ്ലേസ്മെന്റ് എന്നിവയെക്കുറിച്ച് ചോദിക്കാം."
+    ]
+  }
+}
+,
+{
+  "id": 31,
+  "question_patterns": [
+    "random",
+    "unknown",
+    "nonsense",
+    "xyz"
+  ],
+  "tags": ["fallback", "unknown"],
+  "answer_facts": {
+    "Response": [
+      "Sorry, I didn’t understand that. 😅 Could you please rephrase?",
+      "I’m not sure about that. Try asking about courses, admissions, or facilities.",
+      "ക്ഷമിക്കണം, അത് മനസ്സിലായില്ല. ദയവായി വീണ്ടും ചോദിക്കൂ."
+    ]
+  }
+}
+,
+
+{
+  "id": 26,
+  "question_patterns": [
+    "hello",
+    "hi",
+    "hey",
+    "good morning",
+    "good afternoon",
+    "good evening",
+    "namaste",
+    "ഹലോ",
+    "ഹായ്",
+    "സുപ്രഭാതം",
+    "നമസ്കാരം"
+  ],
+  "tags": ["greeting", "hello", "welcome"],
+  "answer_facts": {
+    "Response": [
+      "Hello! 👋 How can I help you today?",
+      "Hi there! 😊 Ask me anything about LBS College of Engineering.",
+      "നമസ്കാരം! LBS College of Engineering സംബന്ധിച്ച എന്തെങ്കിലും ചോദിക്കാമോ?",
+      "ഹായ്! കോളേജിനെക്കുറിച്ച് അറിയാൻ ഞാൻ സഹായിക്കാം."
+    ]
+  }
+}
 ]
