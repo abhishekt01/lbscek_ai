@@ -392,7 +392,6 @@
       "Managed by": "L B S Centre for Science and Technology, an autonomous body owned by the Government of Kerala"
     }
   },
-
   {
     "id": 19,
     "question_patterns": [
@@ -512,8 +511,7 @@
       "Transactions": "College fee payments are fully digital/online",
       "Loans": "Assistance provided for educational loan documentation"
     }
-  }
-  ,
+  },
   {
     "id": 25,
     "question_patterns": [
@@ -536,133 +534,415 @@
       "Role": "Head of the Institution"
     }
   },
-
-{
-  "id": 27,
-  "question_patterns": [
-    "how are you",
-    "how are you doing",
-    "are you okay",
-    "sugham ano",
-    "സുഖമാണോ",
-    "എന്തുണ്ട് വിശേഷം"
-  ],
-  "tags": ["smalltalk", "human", "interaction"],
-  "answer_facts": {
-    "Response": [
-      "I’m doing great! 😊 How can I assist you?",
-      "All good here 👍 What would you like to know?",
-      "സുഖമാണ് 😊 നിങ്ങളെ എങ്ങനെ സഹായിക്കാം?",
-      "എല്ലാം നന്നായി നടക്കുന്നു. എന്താണ് അറിയേണ്ടത്?"
-    ]
+  {
+    "id": 26,
+    "question_patterns": [
+      "hello",
+      "hi",
+      "hey",
+      "good morning",
+      "good afternoon",
+      "good evening",
+      "namaste",
+      "ഹലോ",
+      "ഹായ്",
+      "സുപ്രഭാതം",
+      "നമസ്കാരം"
+    ],
+    "tags": ["greeting", "hello", "welcome"],
+    "answer_facts": {
+      "Response": [
+        "Hello! 👋 How can I help you today?",
+        "Hi there! 😊 Ask me anything about LBS College of Engineering.",
+        "നമസ്കാരം! LBS College of Engineering സംബന്ധിച്ച എന്തെങ്കിലും ചോദിക്കാമോ?",
+        "ഹായ്! കോളേജിനെക്കുറിച്ച് അറിയാൻ ഞാൻ സഹായിക്കാം."
+      ]
+    }
+  },
+  {
+    "id": 27,
+    "question_patterns": [
+      "how are you",
+      "how are you doing",
+      "are you okay",
+      "sugham ano",
+      "സുഖമാണോ",
+      "എന്തുണ്ട് വിശേഷം"
+    ],
+    "tags": ["smalltalk", "human", "interaction"],
+    "answer_facts": {
+      "Response": [
+        "I'm doing great! 😊 How can I assist you?",
+        "All good here 👍 What would you like to know?",
+        "സുഖമാണ് 😊 നിങ്ങളെ എങ്ങനെ സഹായിക്കാം?",
+        "എല്ലാം നന്നായി നടക്കുന്നു. എന്താണ് അറിയേണ്ടത്?"
+      ]
+    }
+  },
+  {
+    "id": 28,
+    "question_patterns": [
+      "thank you",
+      "thanks",
+      "thanks a lot",
+      "thank u",
+      "നന്ദി",
+      "വളരെ നന്ദി"
+    ],
+    "tags": ["thanks", "gratitude", "polite"],
+    "answer_facts": {
+      "Response": [
+        "You're welcome! 😊",
+        "Happy to help 👍",
+        "എന്തെങ്കിലും വേണമെങ്കിൽ വീണ്ടും ചോദിക്കൂ 😊",
+        "സഹായിക്കാൻ കഴിഞ്ഞത് സന്തോഷം!"
+      ]
+    }
+  },
+  {
+    "id": 29,
+    "question_patterns": [
+      "bye",
+      "goodbye",
+      "see you",
+      "exit",
+      "close",
+      "വിട",
+      "പിന്നെ കാണാം"
+    ],
+    "tags": ["bye", "exit", "end"],
+    "answer_facts": {
+      "Response": [
+        "Goodbye! 👋 Have a great day.",
+        "See you again 😊",
+        "വിട! നല്ലൊരു ദിവസം ആശംസിക്കുന്നു 👋",
+        "പിന്നെ കാണാം 😊"
+      ]
+    }
+  },
+  {
+    "id": 30,
+    "question_patterns": [
+      "help",
+      "what can you do",
+      "how can you help me",
+      "options",
+      "സഹായം",
+      "നിനക്ക് എന്ത് ചെയ്യാൻ കഴിയും"
+    ],
+    "tags": ["help", "guide", "support"],
+    "answer_facts": {
+      "Response": [
+        "I can help you with admissions, courses, fees, hostel, placements, facilities, and more.",
+        "Ask me anything about LBS College of Engineering.",
+        "അഡ്മിഷൻ, കോഴ്സുകൾ, ഫീസ്, ഹോസ്റ്റൽ, പ്ലേസ്മെന്റ് എന്നിവയെക്കുറിച്ച് ചോദിക്കാം."
+      ]
+    }
+  },
+  {
+    "id": 31,
+    "question_patterns": [
+      "random",
+      "unknown",
+      "nonsense",
+      "xyz"
+    ],
+    "tags": ["fallback", "unknown"],
+    "answer_facts": {
+      "Response": [
+        "Sorry, I didn't understand that. 😅 Could you please rephrase?",
+        "I'm not sure about that. Try asking about courses, admissions, or facilities.",
+        "ക്ഷമിക്കണം, അത് മനസ്സിലായില്ല. ദയവായി വീണ്ടും ചോദിക്കൂ."
+      ]
+    }
   }
-}
 ,
 {
-  "id": 28,
+  "id": 32,
   "question_patterns": [
-    "thank you",
-    "thanks",
-    "thanks a lot",
-    "thank u",
-    "നന്ദി",
-    "വളരെ നന്ദി"
+    "MCA admission",
+    "Master of Computer Applications",
+    "MCA program details",
+    "MCA eligibility",
+    "എംസിഎ പ്രവേശനം",
+    "എംസിഎ കോഴ്സ്",
+    "മാസ്റ്റർ ഓഫ് കമ്പ്യൂട്ടർ ആപ്ലിക്കേഷൻസ്"
   ],
-  "tags": ["thanks", "gratitude", "polite"],
+  "tags": ["mca", "pg", "admissions", "എംസിഎ", "പിജി"],
   "answer_facts": {
-    "Response": [
-      "You’re welcome! 😊",
-      "Happy to help 👍",
-      "എന്തെങ്കിലും വേണമെങ്കിൽ വീണ്ടും ചോദിക്കൂ 😊",
-      "സഹായിക്കാൻ കഴിഞ്ഞത് സന്തോഷം!"
-    ]
+    "Program": "Master of Computer Applications (MCA)",
+    "Started": "2000",
+    "Intake": "35 students (initially), current intake may vary",
+    "Duration": "3 years (6 semesters)",
+    "Eligibility": "Bachelor's degree with Mathematics at 10+2 or graduation level",
+    "Admission": "Through entrance exam and counselling",
+    "Focus Areas": "Software development, database management, web technologies, networking"
   }
-}
-,
+},
 {
-  "id": 29,
+  "id": 33,
   "question_patterns": [
-    "bye",
-    "goodbye",
-    "see you",
-    "exit",
-    "close",
-    "വിട",
-    "പിന്നെ കാണാം"
+    "Alumni network",
+    "Alumni association",
+    "Former students",
+    "Alumni achievements",
+    "മുൻ വിദ്യാർത്ഥികൾ",
+    "ആൽമ്മനായ്",
+    "പഴയ വിദ്യാർത്ഥികൾ"
   ],
-  "tags": ["bye", "exit", "end"],
+  "tags": ["alumni", "network", "achievements", "ആൽമ്മനായ്", "മുൻവിദ്യാർത്ഥി"],
   "answer_facts": {
-    "Response": [
-      "Goodbye! 👋 Have a great day.",
-      "See you again 😊",
-      "വിട! നല്ലൊരു ദിവസം ആശംസിക്കുന്നു 👋",
-      "പിന്നെ കാണാം 😊"
-    ]
+    "Association": "LBS College of Engineering Alumni Association (LBSCEKAA)",
+    "Activities": "Annual reunions, mentorship programs, guest lectures",
+    "Notable Alumni": "Alumni working in top companies worldwide including Google, Microsoft, Amazon, etc.",
+    "Contributions": "Alumni contribute to placement drives, infrastructure development",
+    "Networking": "Active LinkedIn group and social media communities",
+    "Scholarships": "Alumni-funded scholarships for meritorious students"
   }
-}
-,
+},
 {
-  "id": 30,
+  "id": 34,
   "question_patterns": [
-    "help",
-    "what can you do",
-    "how can you help me",
-    "options",
-    "സഹായം",
-    "നിനക്ക് എന്ത് ചെയ്യാൻ കഴിയും"
+    "Campus events",
+    "College festivals",
+    "Tech fest",
+    "Cultural fest",
+    "കാമ്പസ് ഇവന്റുകൾ",
+    "കോളേജ് ഉത്സവങ്ങൾ",
+    "ടെക് ഫെസ്റ്റ്"
   ],
-  "tags": ["help", "guide", "support"],
+  "tags": ["events", "festivals", "activities", "ഇവന്റുകൾ", "ഉത്സവങ്ങൾ"],
   "answer_facts": {
-    "Response": [
-      "I can help you with admissions, courses, fees, hostel, placements, facilities, and more.",
-      "Ask me anything about LBS College of Engineering.",
-      "അഡ്മിഷൻ, കോഴ്സുകൾ, ഫീസ്, ഹോസ്റ്റൽ, പ്ലേസ്മെന്റ് എന്നിവയെക്കുറിച്ച് ചോദിക്കാം."
-    ]
+    "Tech Fest": "'TECHSURGE' - Annual technical festival",
+    "Cultural Fest": "'RHYTHM' - Annual cultural festival",
+    "Other Events": "Sports meet, department days, teachers' day celebrations",
+    "Competitions": "Hackathons, coding competitions, project exhibitions",
+    "Guest Lectures": "Regular sessions by industry experts and alumni",
+    "Workshops": "Technical workshops throughout the year"
   }
-}
-,
+},
 {
-  "id": 31,
+  "id": 35,
   "question_patterns": [
-    "random",
-    "unknown",
-    "nonsense",
-    "xyz"
+    "Medical facilities",
+    "Health center",
+    "College clinic",
+    "First aid",
+    "മെഡിക്കൽ",
+    "ആരോഗ്യ കേന്ദ്രം",
+    "ഫസ്റ്റ് എയ്ഡ്"
   ],
-  "tags": ["fallback", "unknown"],
+  "tags": ["medical", "health", "clinic", "ആരോഗ്യം", "മെഡിക്കൽ"],
   "answer_facts": {
-    "Response": [
-      "Sorry, I didn’t understand that. 😅 Could you please rephrase?",
-      "I’m not sure about that. Try asking about courses, admissions, or facilities.",
-      "ക്ഷമിക്കണം, അത് മനസ്സിലായില്ല. ദയവായി വീണ്ടും ചോദിക്കൂ."
-    ]
+    "Medical Room": "First aid facility available on campus",
+    "Tie-ups": "Associated with nearby hospitals for emergencies",
+    "Staff": "Trained nurse available during college hours",
+    "Health Camps": "Regular health check-up camps organized",
+    "Insurance": "Student accident insurance coverage",
+    "Mental Health": "Counselling services available for students"
   }
-}
-,
-
+},
 {
-  "id": 26,
+  "id": 36,
   "question_patterns": [
-    "hello",
-    "hi",
-    "hey",
-    "good morning",
-    "good afternoon",
-    "good evening",
-    "namaste",
-    "ഹലോ",
-    "ഹായ്",
-    "സുപ്രഭാതം",
-    "നമസ്കാരം"
+    "Nearby attractions",
+    "Tourist places",
+    "Places to visit",
+    "Weekend getaways",
+    "സ്ഥലങ്ങൾ",
+    "പ്രസിദ്ധ സ്ഥലങ്ങൾ",
+    "സന്ദർശിക്കാനുള്ള സ്ഥലങ്ങൾ"
   ],
-  "tags": ["greeting", "hello", "welcome"],
+  "tags": ["attractions", "tourism", "places", "സ്ഥലങ്ങൾ", "പ്രസിദ്ധം"],
   "answer_facts": {
-    "Response": [
-      "Hello! 👋 How can I help you today?",
-      "Hi there! 😊 Ask me anything about LBS College of Engineering.",
-      "നമസ്കാരം! LBS College of Engineering സംബന്ധിച്ച എന്തെങ്കിലും ചോദിക്കാമോ?",
-      "ഹായ്! കോളേജിനെക്കുറിച്ച് അറിയാൻ ഞാൻ സഹായിക്കാം."
-    ]
+    "Bekal Fort": "Historic fort about 45 km from campus",
+    "Madhur Temple": "Famous temple dedicated to Lord Shiva, approximately 25 km away",
+    "Ananthapuri Temple": "Another important temple in the district",
+    "Chandragiri Fort": "Historical fort with scenic views",
+    "Kappil Beach": "Beautiful beach approximately 35 km away",
+    "Parappa Wildlife Sanctuary": "For nature lovers, about 50 km from campus"
+  }
+},
+{
+  "id": 37,
+  "question_patterns": [
+    "Industry collaborations",
+    "Company tie-ups",
+    "MoUs",
+    "Industry partnerships",
+    "ഇൻഡസ്ട്രി കോളാബറേഷൻ",
+    "കമ്പനി ടൈ-അപ്പുകൾ",
+    "ഉടമ്പടികൾ"
+  ],
+  "tags": ["collaborations", "industry", "partnerships", "ഉടമ്പടി", "കോളാബറേഷൻ"],
+  "answer_facts": {
+    "Objectives": "Enhance practical exposure, facilitate internships, improve placements",
+    "Areas": "Software development, mechanical engineering, electronics",
+    "Benefits": "Guest lectures, industry visits, live projects, internship opportunities",
+    "Placement Support": "Strong industry connections for campus recruitment"
+  }
+},
+{
+  "id": 38,
+  "question_patterns": [
+    "Academic calendar",
+    "College schedule",
+    "Holiday list",
+    "Exam dates",
+    "അക്കാദമിക് കലണ്ടർ",
+    "വിരാമ ദിനങ്ങൾ",
+    "പരീക്ഷാ തീയതികൾ"
+  ],
+  "tags": ["calendar", "schedule", "holidays", "കലണ്ടർ", "തീയതി"],
+  "answer_facts": {
+    "Academic Year": "Typically June/July to April/May",
+    "Semesters": "Odd semester: July-December, Even semester: January-May",
+    "Exams": "Internal assessments throughout, University exams at semester end",
+    "Holidays": "Follows Kerala Government holidays including Onam, Christmas, Eid",
+    "Break": "Summer vacation typically in May-June",
+    "Updates": "Detailed calendar published on college website annually"
+  }
+},
+{
+  "id": 39,
+  "question_patterns": [
+    "Women's cell",
+    "Women empowerment",
+    "Girls committee",
+    "Ladies cell",
+    "വിമൻസ് സെൽ",
+    "സ്ത്രീ സശക്തീകരണം",
+    "പെൺകുട്ടികളുടെ സെൽ"
+  ],
+  "tags": ["women", "empowerment", "safety", "സ്ത്രീ", "സശക്തീകരണം"],
+  "answer_facts": {
+    "Purpose": "Ensure safety and empowerment of women students and staff",
+    "Activities": "Awareness programs, self-defense workshops, counselling",
+    "Committee": "Includes female faculty members and student representatives",
+    "Grievance Redressal": "Confidential mechanism for addressing concerns",
+    "Safety Measures": "Separate hostel, security, and transportation facilities"
+  }
+},
+{
+  "id": 40,
+  "question_patterns": [
+    "Project facilities",
+    "Final year project",
+    "Project guidance",
+    "Mini project",
+    "പ്രോജക്ട്",
+    "ഫൈനൽ ഇയർ പ്രോജക്ട്",
+    "പ്രോജക്ട് ഗൈഡൻസ്"
+  ],
+  "tags": ["projects", "research", "guidance", "പ്രോജക്ട്", "ഗവേഷണം"],
+  "answer_facts": {
+    "Project Duration": "Mini projects in 3rd year, Major project in final year",
+    "Guidance": "Dedicated project guides from faculty",
+    "Facilities": "Labs available for project work with extended hours",
+    "Industry Projects": "Opportunities for live projects with companies",
+    "Funding": "Support for innovative projects through various schemes",
+    "Exhibition": "Annual project exhibition showcasing student work"
+  }
+},
+{
+  "id": 41,
+  "question_patterns": [
+    "Discipline committee",
+    "Code of conduct",
+    "College rules",
+    "Disciplinary action",
+    "ശിഷ്ടാചാര കമ്മിറ്റി",
+    "വിദ്യാർത്ഥി പെരുമാറ്റം",
+    "കോളേജ് നിയമങ്ങൾ"
+  ],
+  "tags": ["discipline", "rules", "conduct", "ശിഷ്ടാചാരം", "നിയമങ്ങൾ"],
+  "answer_facts": {
+    "Committee": "Disciplinary committee comprising faculty and administration",
+    "Code of Conduct": "Detailed rules for student behavior and attendance",
+    "Attendance": "Minimum 75% attendance required in each subject",
+    "Dress Code": "Formal dress code for students",
+    "Violations": "Progressive disciplinary action for rule violations",
+    "Focus": "Maintain academic environment and campus decorum"
+  }
+},
+{
+  "id": 42,
+  "question_patterns": [
+    "Entrepreneurship cell",
+    "Startup support",
+    "Innovation center",
+    "Business ideas",
+    "എൻട്രപ്രിനർഷിപ്പ്",
+    "സ്റ്റാർട്ടപ്പ്",
+    "നൂതന കേന്ദ്രം"
+  ],
+  "tags": ["entrepreneurship", "startup", "innovation", "എൻട്രപ്രിനർഷിപ്പ്", "നൂതനം"],
+  "answer_facts": {
+    "E-Cell": "Entrepreneurship cell to foster startup culture",
+    "Activities": "Ideation workshops, business plan competitions, mentoring",
+    "Support": "Guidance for funding opportunities and incubation",
+    "Success Stories": "Alumni running successful startups",
+    "Collaborations": "Tie-ups with startup incubators and industry"
+  }
+},
+{
+  "id": 43,
+  "question_patterns": [
+    "Foreign students",
+    "International admissions",
+    "NRI quota",
+    "Foreign admissions",
+    "വിദേശ വിദ്യാർത്ഥികൾ",
+    "അന്തർദേശീയ പ്രവേശനം",
+    "എൻആർഐ ക്വോട്ട"
+  ],
+  "tags": ["international", "nri", "foreign", "അന്തർദേശീയ", "വിദേശ"],
+  "answer_facts": {
+    "NRI Quota": "15% seats reserved for NRI candidates",
+    "Eligibility": "Separate eligibility criteria for NRI admissions",
+    "Fees": "Higher fee structure for NRI quota seats",
+    "Documents": "Additional documents required for NRI admissions",
+    "Support": "Special assistance for foreign students regarding accommodation and adjustment"
+  }
+},
+{
+  "id": 44,
+  "question_patterns": [
+    "College magazine",
+    "Student publication",
+    "Annual magazine",
+    "Campus news",
+    "കോളേജ് മാഗസിൻ",
+    "വിദ്യാർത്ഥി പ്രസിദ്ധീകരണം",
+    "വാർഷിക മാഗസിൻ"
+  ],
+  "tags": ["magazine", "publication", "news", "മാഗസിൻ", "പ്രസിദ്ധീകരണം"],
+  "answer_facts": {
+    "Name": "College publishes an annual magazine",
+    "Content": "Academic achievements, student articles, cultural events, alumni news",
+    "Editorial Team": "Student editorial board with faculty guidance",
+    "Participation": "Students contribute articles, poems, artwork",
+    "Digital Version": "Available on college website"
+  }
+},
+{
+  "id": 45,
+  "question_patterns": [
+    "Training programs",
+    "Skill development",
+    "Soft skills training",
+    "Aptitude training",
+    "ട്രെയിനിംഗ്",
+    "ശിൽപ്പ വികസനം",
+    "സോഫ്റ്റ് സ്കില്ല്സ്"
+  ],
+  "tags": ["training", "skills", "development", "ട്രെയിനിംഗ്", "കഴിവുകൾ"],
+  "answer_facts": {
+    "Regular Training": "Aptitude, technical, and soft skills training throughout the year",
+    "Mock Tests": "Regular practice tests for competitive exams",
+    "Interview Preparation": "Mock interviews and group discussion sessions",
+    "Technical Skills": "Workshops on latest technologies and tools",
+    "Placement Training": "Intensive training for final year students"
   }
 }
 ]
