@@ -655,294 +655,610 @@
         "ക്ഷമിക്കണം, അത് മനസ്സിലായില്ല. ദയവായി വീണ്ടും ചോദിക്കൂ."
       ]
     }
+  },
+  {
+    "id": 32,
+    "question_patterns": [
+      "MCA admission",
+      "Master of Computer Applications",
+      "MCA program details",
+      "MCA eligibility",
+      "എംസിഎ പ്രവേശനം",
+      "എംസിഎ കോഴ്സ്",
+      "മാസ്റ്റർ ഓഫ് കമ്പ്യൂട്ടർ ആപ്ലിക്കേഷൻസ്"
+    ],
+    "tags": ["mca", "pg", "admissions", "എംസിഎ", "പിജി"],
+    "answer_facts": {
+      "Program": "Master of Computer Applications (MCA)",
+      "Started": "2000",
+      "Intake": "35 students (initially), current intake may vary",
+      "Duration": "3 years (6 semesters)",
+      "Eligibility": "Bachelor's degree with Mathematics at 10+2 or graduation level",
+      "Admission": "Through entrance exam and counselling",
+      "Focus Areas": "Software development, database management, web technologies, networking"
+    }
+  },
+  {
+    "id": 33,
+    "question_patterns": [
+      "Alumni network",
+      "Alumni association",
+      "Former students",
+      "Alumni achievements",
+      "മുൻ വിദ്യാർത്ഥികൾ",
+      "ആൽമ്മനായ്",
+      "പഴയ വിദ്യാർത്ഥികൾ"
+    ],
+    "tags": ["alumni", "network", "achievements", "ആൽമ്മനായ്", "മുൻവിദ്യാർത്ഥി"],
+    "answer_facts": {
+      "Association": "LBS College of Engineering Alumni Association (LBSCEKAA)",
+      "Activities": "Annual reunions, mentorship programs, guest lectures",
+      "Notable Alumni": "Alumni working in top companies worldwide including Google, Microsoft, Amazon, etc.",
+      "Contributions": "Alumni contribute to placement drives, infrastructure development",
+      "Networking": "Active LinkedIn group and social media communities",
+      "Scholarships": "Alumni-funded scholarships for meritorious students"
+    }
+  },
+  {
+    "id": 34,
+    "question_patterns": [
+      "Campus events",
+      "College festivals",
+      "Tech fest",
+      "Cultural fest",
+      "കാമ്പസ് ഇവന്റുകൾ",
+      "കോളേജ് ഉത്സവങ്ങൾ",
+      "ടെക് ഫെസ്റ്റ്"
+    ],
+    "tags": ["events", "festivals", "activities", "ഇവന്റുകൾ", "ഉത്സവങ്ങൾ"],
+    "answer_facts": {
+      "Tech Fest": "'TECHSURGE' - Annual technical festival",
+      "Cultural Fest": "'RHYTHM' - Annual cultural festival",
+      "Other Events": "Sports meet, department days, teachers' day celebrations",
+      "Competitions": "Hackathons, coding competitions, project exhibitions",
+      "Guest Lectures": "Regular sessions by industry experts and alumni",
+      "Workshops": "Technical workshops throughout the year"
+    }
+  },
+  {
+    "id": 35,
+    "question_patterns": [
+      "Medical facilities",
+      "Health center",
+      "College clinic",
+      "First aid",
+      "മെഡിക്കൽ",
+      "ആരോഗ്യ കേന്ദ്രം",
+      "ഫസ്റ്റ് എയ്ഡ്"
+    ],
+    "tags": ["medical", "health", "clinic", "ആരോഗ്യം", "മെഡിക്കൽ"],
+    "answer_facts": {
+      "Medical Room": "First aid facility available on campus",
+      "Tie-ups": "Associated with nearby hospitals for emergencies",
+      "Staff": "Trained nurse available during college hours",
+      "Health Camps": "Regular health check-up camps organized",
+      "Insurance": "Student accident insurance coverage",
+      "Mental Health": "Counselling services available for students"
+    }
+  },
+  {
+    "id": 36,
+    "question_patterns": [
+      "Nearby attractions",
+      "Tourist places",
+      "Places to visit",
+      "Weekend getaways",
+      "സ്ഥലങ്ങൾ",
+      "പ്രസിദ്ധ സ്ഥലങ്ങൾ",
+      "സന്ദർശിക്കാനുള്ള സ്ഥലങ്ങൾ"
+    ],
+    "tags": ["attractions", "tourism", "places", "സ്ഥലങ്ങൾ", "പ്രസിദ്ധം"],
+    "answer_facts": {
+      "Bekal Fort": "Historic fort about 45 km from campus",
+      "Madhur Temple": "Famous temple dedicated to Lord Shiva, approximately 25 km away",
+      "Ananthapuri Temple": "Another important temple in the district",
+      "Chandragiri Fort": "Historical fort with scenic views",
+      "Kappil Beach": "Beautiful beach approximately 35 km away",
+      "Parappa Wildlife Sanctuary": "For nature lovers, about 50 km from campus"
+    }
+  },
+  {
+    "id": 37,
+    "question_patterns": [
+      "Industry collaborations",
+      "Company tie-ups",
+      "MoUs",
+      "Industry partnerships",
+      "ഇൻഡസ്ട്രി കോളാബറേഷൻ",
+      "കമ്പനി ടൈ-അപ്പുകൾ",
+      "ഉടമ്പടികൾ"
+    ],
+    "tags": ["collaborations", "industry", "partnerships", "ഉടമ്പടി", "കോളാബറേഷൻ"],
+    "answer_facts": {
+      "Objectives": "Enhance practical exposure, facilitate internships, improve placements",
+      "Areas": "Software development, mechanical engineering, electronics",
+      "Benefits": "Guest lectures, industry visits, live projects, internship opportunities",
+      "Placement Support": "Strong industry connections for campus recruitment"
+    }
+  },
+  {
+    "id": 38,
+    "question_patterns": [
+      "Academic calendar",
+      "College schedule",
+      "Holiday list",
+      "Exam dates",
+      "അക്കാദമിക് കലണ്ടർ",
+      "വിരാമ ദിനങ്ങൾ",
+      "പരീക്ഷാ തീയതികൾ"
+    ],
+    "tags": ["calendar", "schedule", "holidays", "കലണ്ടർ", "തീയതി"],
+    "answer_facts": {
+      "Academic Year": "Typically June/July to April/May",
+      "Semesters": "Odd semester: July-December, Even semester: January-May",
+      "Exams": "Internal assessments throughout, University exams at semester end",
+      "Holidays": "Follows Kerala Government holidays including Onam, Christmas, Eid",
+      "Break": "Summer vacation typically in May-June",
+      "Updates": "Detailed calendar published on college website annually"
+    }
+  },
+  {
+    "id": 39,
+    "question_patterns": [
+      "Women's cell",
+      "Women empowerment",
+      "Girls committee",
+      "Ladies cell",
+      "വിമൻസ് സെൽ",
+      "സ്ത്രീ സശക്തീകരണം",
+      "പെൺകുട്ടികളുടെ സെൽ"
+    ],
+    "tags": ["women", "empowerment", "safety", "സ്ത്രീ", "സശക്തീകരണം"],
+    "answer_facts": {
+      "Purpose": "Ensure safety and empowerment of women students and staff",
+      "Activities": "Awareness programs, self-defense workshops, counselling",
+      "Committee": "Includes female faculty members and student representatives",
+      "Grievance Redressal": "Confidential mechanism for addressing concerns",
+      "Safety Measures": "Separate hostel, security, and transportation facilities"
+    }
+  },
+  {
+    "id": 40,
+    "question_patterns": [
+      "Project facilities",
+      "Final year project",
+      "Project guidance",
+      "Mini project",
+      "പ്രോജക്ട്",
+      "ഫൈനൽ ഇയർ പ്രോജക്ട്",
+      "പ്രോജക്ട് ഗൈഡൻസ്"
+    ],
+    "tags": ["projects", "research", "guidance", "പ്രോജക്ട്", "ഗവേഷണം"],
+    "answer_facts": {
+      "Project Duration": "Mini projects in 3rd year, Major project in final year",
+      "Guidance": "Dedicated project guides from faculty",
+      "Facilities": "Labs available for project work with extended hours",
+      "Industry Projects": "Opportunities for live projects with companies",
+      "Funding": "Support for innovative projects through various schemes",
+      "Exhibition": "Annual project exhibition showcasing student work"
+    }
+  },
+  {
+    "id": 41,
+    "question_patterns": [
+      "Discipline committee",
+      "Code of conduct",
+      "College rules",
+      "Disciplinary action",
+      "ശിഷ്ടാചാര കമ്മിറ്റി",
+      "വിദ്യാർത്ഥി പെരുമാറ്റം",
+      "കോളേജ് നിയമങ്ങൾ"
+    ],
+    "tags": ["discipline", "rules", "conduct", "ശിഷ്ടാചാരം", "നിയമങ്ങൾ"],
+    "answer_facts": {
+      "Committee": "Disciplinary committee comprising faculty and administration",
+      "Code of Conduct": "Detailed rules for student behavior and attendance",
+      "Attendance": "Minimum 75% attendance required in each subject",
+      "Dress Code": "Formal dress code for students",
+      "Violations": "Progressive disciplinary action for rule violations",
+      "Focus": "Maintain academic environment and campus decorum"
+    }
+  },
+  {
+    "id": 42,
+    "question_patterns": [
+      "Entrepreneurship cell",
+      "Startup support",
+      "Innovation center",
+      "Business ideas",
+      "എൻട്രപ്രിനർഷിപ്പ്",
+      "സ്റ്റാർട്ടപ്പ്",
+      "നൂതന കേന്ദ്രം"
+    ],
+    "tags": ["entrepreneurship", "startup", "innovation", "എൻട്രപ്രിനർഷിപ്പ്", "നൂതനം"],
+    "answer_facts": {
+      "E-Cell": "Entrepreneurship cell to foster startup culture",
+      "Activities": "Ideation workshops, business plan competitions, mentoring",
+      "Support": "Guidance for funding opportunities and incubation",
+      "Success Stories": "Alumni running successful startups",
+      "Collaborations": "Tie-ups with startup incubators and industry"
+    }
+  },
+  {
+    "id": 43,
+    "question_patterns": [
+      "Foreign students",
+      "International admissions",
+      "NRI quota",
+      "Foreign admissions",
+      "വിദേശ വിദ്യാർത്ഥികൾ",
+      "അന്തർദേശീയ പ്രവേശനം",
+      "എൻആർഐ ക്വോട്ട"
+    ],
+    "tags": ["international", "nri", "foreign", "അന്തർദേശീയ", "വിദേശ"],
+    "answer_facts": {
+      "NRI Quota": "15% seats reserved for NRI candidates",
+      "Eligibility": "Separate eligibility criteria for NRI admissions",
+      "Fees": "Higher fee structure for NRI quota seats",
+      "Documents": "Additional documents required for NRI admissions",
+      "Support": "Special assistance for foreign students regarding accommodation and adjustment"
+    }
+  },
+  {
+    "id": 44,
+    "question_patterns": [
+      "College magazine",
+      "Student publication",
+      "Annual magazine",
+      "Campus news",
+      "കോളേജ് മാഗസിൻ",
+      "വിദ്യാർത്ഥി പ്രസിദ്ധീകരണം",
+      "വാർഷിക മാഗസിൻ"
+    ],
+    "tags": ["magazine", "publication", "news", "മാഗസിൻ", "പ്രസിദ്ധീകരണം"],
+    "answer_facts": {
+      "Name": "College publishes an annual magazine",
+      "Content": "Academic achievements, student articles, cultural events, alumni news",
+      "Editorial Team": "Student editorial board with faculty guidance",
+      "Participation": "Students contribute articles, poems, artwork",
+      "Digital Version": "Available on college website"
+    }
+  },
+  {
+    "id": 45,
+    "question_patterns": [
+      "Training programs",
+      "Skill development",
+      "Soft skills training",
+      "Aptitude training",
+      "ട്രെയിനിംഗ്",
+      "ശിൽപ്പ വികസനം",
+      "സോഫ്റ്റ് സ്കില്ല്സ്"
+    ],
+    "tags": ["training", "skills", "development", "ട്രെയിനിംഗ്", "കഴിവുകൾ"],
+    "answer_facts": {
+      "Regular Training": "Aptitude, technical, and soft skills training throughout the year",
+      "Mock Tests": "Regular practice tests for competitive exams",
+      "Interview Preparation": "Mock interviews and group discussion sessions",
+      "Technical Skills": "Workshops on latest technologies and tools",
+      "Placement Training": "Intensive training for final year students"
+    }
+  },
+  {
+    "id": 46,
+    "question_patterns": [
+      "Campus map",
+      "Where is [building name]?",
+      "Building locations",
+      "Campus navigation",
+      "How to find [department]?",
+      "കാമ്പസ് മാപ്പ്",
+      "[കെട്ടിടം] എവിടെ ആണ്?",
+      "കെട്ടിടങ്ങളുടെ സ്ഥാനം",
+      "എങ്ങനെ കണ്ടുപിടിക്കാം?"
+    ],
+    "tags": ["campus", "map", "buildings", "navigation", "location", "മാപ്പ്", "സ്ഥാനം"],
+    "answer_facts": {
+      "Campus Overview": {
+        "name": "LBS College of Engineering",
+        "location": "Povval, Cherkala, Kasaragod, Kerala",
+        "roads": ["LBS Campus Road", "LBS Ground Road", "L.B.S Road"]
+      },
+      "Key Buildings": [
+        {
+          "name": "Main Academic Block",
+          "type": "Central building with classrooms",
+          "location": "Along LBS Campus Road",
+          "nearby": ["Administrative Building", "Computer Lab", "LBS Makerspace"]
+        },
+        {
+          "name": "Mechanical Engineering Department",
+          "type": "Department building",
+          "location": "Beside football ground along LBS Ground Road",
+          "nearby": ["Football Ground", "LBS Ground Road"]
+        },
+        {
+          "name": "Computer Science Department",
+          "type": "Department building",
+          "location": "Uphill from main block, near library",
+          "nearby": ["College Library"]
+        },
+        {
+          "name": "Library",
+          "type": "Academic facility",
+          "location": "Near CSE Department",
+          "nearby": ["CSE Department"]
+        },
+        {
+          "name": "Canteen",
+          "type": "Food facility",
+          "location": "Downhill from main academic block",
+          "nearby": ["Main Academic Block"]
+        }
+      ]
+    }
+  },
+  {
+    "id": 47,
+    "question_patterns": [
+      "Main academic block",
+      "Where are classrooms?",
+      "Teaching blocks",
+      "പ്രധാന അക്കാദമിക് ബ്ലോക്ക്",
+      "ക്ലാസ് മുറികൾ എവിടെ?",
+      "പഠന ബ്ലോക്കുകൾ"
+    ],
+    "tags": ["academic", "classrooms", "block", "ബ്ലോക്ക്", "ക്ലാസ് മുറി"],
+    "answer_facts": {
+      "Name": "LBS College of Engineering – Main Academic Block",
+      "Type": "Academic building",
+      "Location": "Central building along LBS Campus Road",
+      "Features": "Classrooms, faculty rooms, department offices",
+      "Nearby Landmarks": [
+        "Administrative Building",
+        "Computer Lab",
+        "LBS Makerspace"
+      ],
+      "Accessibility": "Central location, easily accessible from campus entrance"
+    }
+  },
+  {
+    "id": 48,
+    "question_patterns": [
+      "Mechanical department",
+      "Where is ME department?",
+      "Mechanical engineering building",
+      "മെക്കാനിക്കൽ വകുപ്പ്",
+      "എംഇ വകുപ്പ് എവിടെ?",
+      "മെക്കാനിക്കൽ എഞ്ചിനീയറിംഗ് കെട്ടിടം"
+    ],
+    "tags": ["mechanical", "department", "engineering", "മെക്കാനിക്കൽ", "വകുപ്പ്"],
+    "answer_facts": {
+      "Name": "Department of Mechanical Engineering",
+      "Type": "Academic department building",
+      "Location": "Beside the football ground along LBS Ground Road",
+      "Features": "Classrooms, labs, faculty offices, workshop",
+      "Nearby Landmarks": [
+        "LBS College Football Ground",
+        "LBS Ground Road",
+        "Fluid Mechanics Lab"
+      ],
+      "Special Labs": "CAD/CAM lab, Fluid Mechanics Lab, Workshop"
+    }
+  },
+  {
+    "id": 49,
+    "question_patterns": [
+      "Computer department",
+      "Where is CSE department?",
+      "CSE building",
+      "കമ്പ്യൂട്ടർ വകുപ്പ്",
+      "സി‌എസ്‌ഇ വകുപ്പ് എവിടെ?",
+      "കമ്പ്യൂട്ടർ സയൻസ് കെട്ടിടം"
+    ],
+    "tags": ["cse", "computer", "department", "കമ്പ്യൂട്ടർ", "സി‌എസ്‌ഇ"],
+    "answer_facts": {
+      "Name": "Department of Computer Science and Engineering",
+      "Type": "Academic department building",
+      "Location": "Uphill from the main academic block, near the college library",
+      "Features": "Classrooms, computer labs, faculty offices",
+      "Nearby Landmarks": [
+        "College Library",
+        "Shahanas Hostel"
+      ],
+      "Special Facilities": "Computer labs, networking lab, project labs"
+    }
+  },
+  {
+    "id": 50,
+    "question_patterns": [
+      "College library location",
+      "Where is library?",
+      "Library building",
+      "വായനശാല എവിടെ?",
+      "ലൈബ്രറി കെട്ടിടം",
+      "വായനശാല സ്ഥാനം"
+    ],
+    "tags": ["library", "reading", "books", "വായനശാല", "പുസ്തകശാല"],
+    "answer_facts": {
+      "Name": "College Library",
+      "Type": "Academic facility",
+      "Location": "Near the Department of Computer Science and Engineering",
+      "Features": "Reading rooms, reference section, digital library, photocopying",
+      "Nearby Landmarks": [
+        "Department of Computer Science and Engineering",
+        "Shahanas Hostel"
+      ],
+      "Collection": "Over 25,000 books, 100+ print journals, 5000+ e-journals"
+    }
+  },
+  {
+    "id": 51,
+    "question_patterns": [
+      "Canteen location",
+      "Where to eat?",
+      "Food court location",
+      "Cafeteria where?",
+      "കാൻറീൻ എവിടെ?",
+      "ഭക്ഷണശാല",
+      "എവിടെ ഭക്ഷണം കഴിക്കാം?"
+    ],
+    "tags": ["canteen", "food", "eating", "കാൻറീൻ", "ഭക്ഷണം"],
+    "answer_facts": {
+      "Name": "LBS College Canteen",
+      "Type": "Food facility",
+      "Location": "Downhill from the main academic block",
+      "Features": "Serves breakfast, lunch, and snacks",
+      "Nearby Landmarks": [
+        "Main Academic Block"
+      ],
+      "Menu": "South Indian and North Indian dishes (Veg & Non-Veg)",
+      "Timings": "8:00 AM to 5:00 PM on working days"
+    }
+  },
+  {
+    "id": 52,
+    "question_patterns": [
+      "Sports ground",
+      "Football ground",
+      "Playground location",
+      "Where to play sports?",
+      "സ്പോർട്സ് ഗ്രൗണ്ട്",
+      "ഫുട്ബോൾ ഗ്രൗണ്ട്",
+      "കളിക്കാനുള്ള സ്ഥലം"
+    ],
+    "tags": ["sports", "ground", "football", "play", "ഗ്രൗണ്ട്", "കളിസ്ഥലം"],
+    "answer_facts": {
+      "Main Ground": "LBS College Football Ground",
+      "Type": "Sports facility",
+      "Location": "Large open ground near the Mechanical Engineering Department",
+      "Features": "Football field, cricket pitch, track",
+      "Nearby Landmarks": [
+        "Department of Mechanical Engineering",
+        "LBS Ground Road"
+      ],
+      "Other Sports Areas": "Multipurpose Sports Area for various activities"
+    }
+  },
+  {
+    "id": 53,
+    "question_patterns": [
+      "Hostel location",
+      "Where is hostel?",
+      "Shahanas hostel",
+      "Boys hostel location",
+      "Girls hostel location",
+      "ഹോസ്റ്റൽ എവിടെ?",
+      "ഷഹാനസ് ഹോസ്റ്റൽ",
+      "വസതി സ്ഥലം"
+    ],
+    "tags": ["hostel", "accommodation", "shahanas", "ഹോസ്റ്റൽ", "വസതി"],
+    "answer_facts": {
+      "Girls Hostel": "Shahanas Hostel",
+      "Type": "Hostel accommodation",
+      "Location": "Near the Department of Computer Science and Engineering",
+      "Features": "Secure hostel with capacity for 200 students",
+      "Nearby Landmarks": [
+        "Department of Computer Science and Engineering",
+        "College Library"
+      ],
+      "Facilities": "Wi-Fi, reading room, TV room, indoor games, gym, laundry"
+    }
+  },
+  {
+    "id": 54,
+    "question_patterns": [
+      "Bank in campus",
+      "ATM location",
+      "Central Bank of India",
+      "Where is bank?",
+      "ബാങ്ക് എവിടെ?",
+      "എടിഎം സ്ഥാനം",
+      "സെൻട്രൽ ബാങ്ക്"
+    ],
+    "tags": ["bank", "atm", "finance", "ബാങ്ക്", "എടിഎം"],
+    "answer_facts": {
+      "Bank": "Central Bank of India (Campus Branch)",
+      "Type": "Banking facility",
+      "Location": "Near the Fluid Mechanics Lab along LBS Ground Road",
+      "Status": "Temporarily closed",
+      "Nearby Landmarks": [
+        "LBS Fluid Mechanics Lab",
+        "PG Section"
+      ],
+      "Alternative": "ATM facility available near college entrance, other banks within 2km"
+    }
+  },
+  {
+    "id": 55,
+    "question_patterns": [
+      "Bus garage",
+      "College bus parking",
+      "Where are buses parked?",
+      "Bus stand",
+      "ബസ് ഗാരേജ്",
+      "കോളേജ് ബസ് പാർക്കിംഗ്",
+      "ബസ് നിലയം"
+    ],
+    "tags": ["bus", "transport", "garage", "ബസ്", "ഗാരേജ്"],
+    "answer_facts": {
+      "Name": "Bus Garage (LBS)",
+      "Type": "Transport facility",
+      "Location": "Bus parking area along LBS Campus Road",
+      "Purpose": "Parking for college buses",
+      "Nearby Landmarks": [
+        "LBS Campus Road"
+      ],
+      "Transport Service": "College buses operate from major towns in Kasaragod district"
+    }
+  },
+  {
+    "id": 56,
+    "question_patterns": [
+      "Makerspace",
+      "Innovation lab",
+      "Project lab",
+      "Where is makerspace?",
+      "മേക്കർസ്പേസ്",
+      "നൂതന ലാബ്",
+      "പ്രോജക്ട് ലാബ്"
+    ],
+    "tags": ["makerspace", "innovation", "lab", "മേക്കർസ്പേസ്", "നൂതനം"],
+    "answer_facts": {
+      "Name": "LBS Makerspace",
+      "Type": "Innovation lab",
+      "Location": "Near the administrative building and computer lab",
+      "Purpose": "Space for innovation, prototyping, project work",
+      "Nearby Landmarks": [
+        "Administrative Building",
+        "Computer Lab",
+        "Main Academic Block"
+      ],
+      "Features": "Equipment for prototyping, tools for electronics and mechanical projects"
+    }
+  },
+  {
+    "id": 57,
+    "question_patterns": [
+      "PG section",
+      "Post graduate block",
+      "Where is PG department?",
+      "MCA department location",
+      "പിജി സെക്ഷൻ",
+      "പോസ്റ്റ് ഗ്രാജുവേറ്റ് ബ്ലോക്ക്",
+      "എംസിഎ വകുപ്പ്"
+    ],
+    "tags": ["pg", "postgraduate", "mca", "പിജി", "പോസ്റ്റ് ഗ്രാജുവേറ്റ്"],
+    "answer_facts": {
+      "Name": "LBS College PG Section",
+      "Type": "Academic building",
+      "Location": "Near the Fluid Mechanics Lab along LBS Ground Road",
+      "Purpose": "Postgraduate programs including MCA",
+      "Nearby Landmarks": [
+        "LBS Fluid Mechanics Lab",
+        "Central Bank of India"
+      ],
+      "Programs": "MCA (Master of Computer Applications) and other PG courses"
+    }
   }
-,
-{
-  "id": 32,
-  "question_patterns": [
-    "MCA admission",
-    "Master of Computer Applications",
-    "MCA program details",
-    "MCA eligibility",
-    "എംസിഎ പ്രവേശനം",
-    "എംസിഎ കോഴ്സ്",
-    "മാസ്റ്റർ ഓഫ് കമ്പ്യൂട്ടർ ആപ്ലിക്കേഷൻസ്"
-  ],
-  "tags": ["mca", "pg", "admissions", "എംസിഎ", "പിജി"],
-  "answer_facts": {
-    "Program": "Master of Computer Applications (MCA)",
-    "Started": "2000",
-    "Intake": "35 students (initially), current intake may vary",
-    "Duration": "3 years (6 semesters)",
-    "Eligibility": "Bachelor's degree with Mathematics at 10+2 or graduation level",
-    "Admission": "Through entrance exam and counselling",
-    "Focus Areas": "Software development, database management, web technologies, networking"
-  }
-},
-{
-  "id": 33,
-  "question_patterns": [
-    "Alumni network",
-    "Alumni association",
-    "Former students",
-    "Alumni achievements",
-    "മുൻ വിദ്യാർത്ഥികൾ",
-    "ആൽമ്മനായ്",
-    "പഴയ വിദ്യാർത്ഥികൾ"
-  ],
-  "tags": ["alumni", "network", "achievements", "ആൽമ്മനായ്", "മുൻവിദ്യാർത്ഥി"],
-  "answer_facts": {
-    "Association": "LBS College of Engineering Alumni Association (LBSCEKAA)",
-    "Activities": "Annual reunions, mentorship programs, guest lectures",
-    "Notable Alumni": "Alumni working in top companies worldwide including Google, Microsoft, Amazon, etc.",
-    "Contributions": "Alumni contribute to placement drives, infrastructure development",
-    "Networking": "Active LinkedIn group and social media communities",
-    "Scholarships": "Alumni-funded scholarships for meritorious students"
-  }
-},
-{
-  "id": 34,
-  "question_patterns": [
-    "Campus events",
-    "College festivals",
-    "Tech fest",
-    "Cultural fest",
-    "കാമ്പസ് ഇവന്റുകൾ",
-    "കോളേജ് ഉത്സവങ്ങൾ",
-    "ടെക് ഫെസ്റ്റ്"
-  ],
-  "tags": ["events", "festivals", "activities", "ഇവന്റുകൾ", "ഉത്സവങ്ങൾ"],
-  "answer_facts": {
-    "Tech Fest": "'TECHSURGE' - Annual technical festival",
-    "Cultural Fest": "'RHYTHM' - Annual cultural festival",
-    "Other Events": "Sports meet, department days, teachers' day celebrations",
-    "Competitions": "Hackathons, coding competitions, project exhibitions",
-    "Guest Lectures": "Regular sessions by industry experts and alumni",
-    "Workshops": "Technical workshops throughout the year"
-  }
-},
-{
-  "id": 35,
-  "question_patterns": [
-    "Medical facilities",
-    "Health center",
-    "College clinic",
-    "First aid",
-    "മെഡിക്കൽ",
-    "ആരോഗ്യ കേന്ദ്രം",
-    "ഫസ്റ്റ് എയ്ഡ്"
-  ],
-  "tags": ["medical", "health", "clinic", "ആരോഗ്യം", "മെഡിക്കൽ"],
-  "answer_facts": {
-    "Medical Room": "First aid facility available on campus",
-    "Tie-ups": "Associated with nearby hospitals for emergencies",
-    "Staff": "Trained nurse available during college hours",
-    "Health Camps": "Regular health check-up camps organized",
-    "Insurance": "Student accident insurance coverage",
-    "Mental Health": "Counselling services available for students"
-  }
-},
-{
-  "id": 36,
-  "question_patterns": [
-    "Nearby attractions",
-    "Tourist places",
-    "Places to visit",
-    "Weekend getaways",
-    "സ്ഥലങ്ങൾ",
-    "പ്രസിദ്ധ സ്ഥലങ്ങൾ",
-    "സന്ദർശിക്കാനുള്ള സ്ഥലങ്ങൾ"
-  ],
-  "tags": ["attractions", "tourism", "places", "സ്ഥലങ്ങൾ", "പ്രസിദ്ധം"],
-  "answer_facts": {
-    "Bekal Fort": "Historic fort about 45 km from campus",
-    "Madhur Temple": "Famous temple dedicated to Lord Shiva, approximately 25 km away",
-    "Ananthapuri Temple": "Another important temple in the district",
-    "Chandragiri Fort": "Historical fort with scenic views",
-    "Kappil Beach": "Beautiful beach approximately 35 km away",
-    "Parappa Wildlife Sanctuary": "For nature lovers, about 50 km from campus"
-  }
-},
-{
-  "id": 37,
-  "question_patterns": [
-    "Industry collaborations",
-    "Company tie-ups",
-    "MoUs",
-    "Industry partnerships",
-    "ഇൻഡസ്ട്രി കോളാബറേഷൻ",
-    "കമ്പനി ടൈ-അപ്പുകൾ",
-    "ഉടമ്പടികൾ"
-  ],
-  "tags": ["collaborations", "industry", "partnerships", "ഉടമ്പടി", "കോളാബറേഷൻ"],
-  "answer_facts": {
-    "Objectives": "Enhance practical exposure, facilitate internships, improve placements",
-    "Areas": "Software development, mechanical engineering, electronics",
-    "Benefits": "Guest lectures, industry visits, live projects, internship opportunities",
-    "Placement Support": "Strong industry connections for campus recruitment"
-  }
-},
-{
-  "id": 38,
-  "question_patterns": [
-    "Academic calendar",
-    "College schedule",
-    "Holiday list",
-    "Exam dates",
-    "അക്കാദമിക് കലണ്ടർ",
-    "വിരാമ ദിനങ്ങൾ",
-    "പരീക്ഷാ തീയതികൾ"
-  ],
-  "tags": ["calendar", "schedule", "holidays", "കലണ്ടർ", "തീയതി"],
-  "answer_facts": {
-    "Academic Year": "Typically June/July to April/May",
-    "Semesters": "Odd semester: July-December, Even semester: January-May",
-    "Exams": "Internal assessments throughout, University exams at semester end",
-    "Holidays": "Follows Kerala Government holidays including Onam, Christmas, Eid",
-    "Break": "Summer vacation typically in May-June",
-    "Updates": "Detailed calendar published on college website annually"
-  }
-},
-{
-  "id": 39,
-  "question_patterns": [
-    "Women's cell",
-    "Women empowerment",
-    "Girls committee",
-    "Ladies cell",
-    "വിമൻസ് സെൽ",
-    "സ്ത്രീ സശക്തീകരണം",
-    "പെൺകുട്ടികളുടെ സെൽ"
-  ],
-  "tags": ["women", "empowerment", "safety", "സ്ത്രീ", "സശക്തീകരണം"],
-  "answer_facts": {
-    "Purpose": "Ensure safety and empowerment of women students and staff",
-    "Activities": "Awareness programs, self-defense workshops, counselling",
-    "Committee": "Includes female faculty members and student representatives",
-    "Grievance Redressal": "Confidential mechanism for addressing concerns",
-    "Safety Measures": "Separate hostel, security, and transportation facilities"
-  }
-},
-{
-  "id": 40,
-  "question_patterns": [
-    "Project facilities",
-    "Final year project",
-    "Project guidance",
-    "Mini project",
-    "പ്രോജക്ട്",
-    "ഫൈനൽ ഇയർ പ്രോജക്ട്",
-    "പ്രോജക്ട് ഗൈഡൻസ്"
-  ],
-  "tags": ["projects", "research", "guidance", "പ്രോജക്ട്", "ഗവേഷണം"],
-  "answer_facts": {
-    "Project Duration": "Mini projects in 3rd year, Major project in final year",
-    "Guidance": "Dedicated project guides from faculty",
-    "Facilities": "Labs available for project work with extended hours",
-    "Industry Projects": "Opportunities for live projects with companies",
-    "Funding": "Support for innovative projects through various schemes",
-    "Exhibition": "Annual project exhibition showcasing student work"
-  }
-},
-{
-  "id": 41,
-  "question_patterns": [
-    "Discipline committee",
-    "Code of conduct",
-    "College rules",
-    "Disciplinary action",
-    "ശിഷ്ടാചാര കമ്മിറ്റി",
-    "വിദ്യാർത്ഥി പെരുമാറ്റം",
-    "കോളേജ് നിയമങ്ങൾ"
-  ],
-  "tags": ["discipline", "rules", "conduct", "ശിഷ്ടാചാരം", "നിയമങ്ങൾ"],
-  "answer_facts": {
-    "Committee": "Disciplinary committee comprising faculty and administration",
-    "Code of Conduct": "Detailed rules for student behavior and attendance",
-    "Attendance": "Minimum 75% attendance required in each subject",
-    "Dress Code": "Formal dress code for students",
-    "Violations": "Progressive disciplinary action for rule violations",
-    "Focus": "Maintain academic environment and campus decorum"
-  }
-},
-{
-  "id": 42,
-  "question_patterns": [
-    "Entrepreneurship cell",
-    "Startup support",
-    "Innovation center",
-    "Business ideas",
-    "എൻട്രപ്രിനർഷിപ്പ്",
-    "സ്റ്റാർട്ടപ്പ്",
-    "നൂതന കേന്ദ്രം"
-  ],
-  "tags": ["entrepreneurship", "startup", "innovation", "എൻട്രപ്രിനർഷിപ്പ്", "നൂതനം"],
-  "answer_facts": {
-    "E-Cell": "Entrepreneurship cell to foster startup culture",
-    "Activities": "Ideation workshops, business plan competitions, mentoring",
-    "Support": "Guidance for funding opportunities and incubation",
-    "Success Stories": "Alumni running successful startups",
-    "Collaborations": "Tie-ups with startup incubators and industry"
-  }
-},
-{
-  "id": 43,
-  "question_patterns": [
-    "Foreign students",
-    "International admissions",
-    "NRI quota",
-    "Foreign admissions",
-    "വിദേശ വിദ്യാർത്ഥികൾ",
-    "അന്തർദേശീയ പ്രവേശനം",
-    "എൻആർഐ ക്വോട്ട"
-  ],
-  "tags": ["international", "nri", "foreign", "അന്തർദേശീയ", "വിദേശ"],
-  "answer_facts": {
-    "NRI Quota": "15% seats reserved for NRI candidates",
-    "Eligibility": "Separate eligibility criteria for NRI admissions",
-    "Fees": "Higher fee structure for NRI quota seats",
-    "Documents": "Additional documents required for NRI admissions",
-    "Support": "Special assistance for foreign students regarding accommodation and adjustment"
-  }
-},
-{
-  "id": 44,
-  "question_patterns": [
-    "College magazine",
-    "Student publication",
-    "Annual magazine",
-    "Campus news",
-    "കോളേജ് മാഗസിൻ",
-    "വിദ്യാർത്ഥി പ്രസിദ്ധീകരണം",
-    "വാർഷിക മാഗസിൻ"
-  ],
-  "tags": ["magazine", "publication", "news", "മാഗസിൻ", "പ്രസിദ്ധീകരണം"],
-  "answer_facts": {
-    "Name": "College publishes an annual magazine",
-    "Content": "Academic achievements, student articles, cultural events, alumni news",
-    "Editorial Team": "Student editorial board with faculty guidance",
-    "Participation": "Students contribute articles, poems, artwork",
-    "Digital Version": "Available on college website"
-  }
-},
-{
-  "id": 45,
-  "question_patterns": [
-    "Training programs",
-    "Skill development",
-    "Soft skills training",
-    "Aptitude training",
-    "ട്രെയിനിംഗ്",
-    "ശിൽപ്പ വികസനം",
-    "സോഫ്റ്റ് സ്കില്ല്സ്"
-  ],
-  "tags": ["training", "skills", "development", "ട്രെയിനിംഗ്", "കഴിവുകൾ"],
-  "answer_facts": {
-    "Regular Training": "Aptitude, technical, and soft skills training throughout the year",
-    "Mock Tests": "Regular practice tests for competitive exams",
-    "Interview Preparation": "Mock interviews and group discussion sessions",
-    "Technical Skills": "Workshops on latest technologies and tools",
-    "Placement Training": "Intensive training for final year students"
-  }
-}
 ]
